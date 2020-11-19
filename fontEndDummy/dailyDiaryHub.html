@@ -96,6 +96,13 @@
         border-color: #2795e9;
         }
 
+        #logInPage{ 
+            margin: 100px;
+            padding: 30px;
+            text-align: center;
+            background-color: var(--neutral-accent);
+        }
+
         :root {
             /*
             three themes with three color options
@@ -129,25 +136,30 @@
             
         }
 
-        nav {
+        .navigation {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            background-color: var(--neutral-main);
+            align-items: flex-end;
+            background-color: var(--neutral-accent);
+            
+            padding: 10px;
+            
         }
 
-        header{
+        .heading {
             display: flex;
             align-items: flex-start;
             flex-direction: row;
             justify-content: space-between;
             color : var(--neutral-main);
             background-color: var(--neutral-highlight);
+            border-bottom: 5px solid var(--neutral-main);
         }
 
         button {
             border-color: var(--neutral-highlight);
-            border-radius: 10px;
+            border-width: 0px;
+            border-radius: 20px;
             background-color: var(--neutral-highlight);
             box-shadow: 2px 2px 10px grey;
         }
@@ -176,9 +188,20 @@
             
         }
 
+        .container{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
         .hide {
             display: none;
         }
+
+        .entryParagraph {
+            background-color: red;
+        }
+
     </style>
     
     <!-- Bootstrap CSS -->
@@ -253,7 +276,7 @@
              * quote navigation
              **/
 
-            const quotes = ["hey girl", "you got this", "don't give up"];
+            const quotes = ["you are awesome", "you got this", "don't give up"];
             var quoteIndex = 0;
             const quoteText = document.getElementById("qtTxt")
             quoteText.innerText = quotes[quoteIndex]
@@ -291,15 +314,15 @@
                 {
                 title: "My First Entry",
                 date: "11/18/2020",
-                text: "Wow, this took so long to make. Much longer than I expected and I think I'm going crazy."
+                text: "Here is a very interesting detail about my life."
                 },
                 {
                 title: "My Second Entry",
                 date: "11/18/2020",
-                text: "On the verge of tears but I think I'm going to finsih?"
+                text: "Here is more about my life."
                 },
                 {
-                 title: "This One is a Biggie",
+                 title: "This One is a Long One",
                  date: "11/18/2020",
                  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nec ullamcorper lacus, non viverra justo. Curabitur tempus, erat id consectetur sodales, mi mi condimentum elit, ut finibus tortor libero at est. Pellentesque pulvinar sollicitudin eros eu commodo. Aliquam ut dui ac risus auctor molestie eu et est. Maecenas lacinia malesuada tortor sit amet efficitur. Nunc vitae pretium libero. Suspendisse vitae nulla ac leo hendrerit ultrices. Nullam lacinia sapien eros, id tincidunt odio placerat ac. Donec id dignissim justo, et vestibulum neque. Donec volutpat nisi quam. Nunc sagittis eget urna at venenatis. Vestibulum suscipit fermentum sodales. Duis vehicula neque sit amet ex sodales, ut venenatis nunc pharetra. Mauris eu leo eu enim aliquam venenatis. Donec sagittis nulla orci, sed dapibus massa auctor vitae. Mauris tristique enim eu diam faucibus, vel semper mi bibendum. Cras velit nisl, commodo nec viverra eget, bibendum at lorem. Integer sit amet lectus at tellus dictum consectetur ac id sem. Etiam eget magna in ipsum euismod placerat. Morbi a rutrum lacus. Fusce eget augue egestas, semper dolor ut, condimentum magna."
                 }
@@ -336,7 +359,7 @@
                 newTitle = document.createTextNode(entry.title)
                     newDate = document.createTextNode(entry.date)
                     newParagraph = document.createTextNode(entry.text)
-                    newParagraph.id = "entryParagraph"
+                    newParagraph.className = 'entryParagraph'
                     myHeader = document.createElement("h2")
                     myHeader.appendChild(newTitle)
                     
@@ -390,19 +413,20 @@
     <body>
 
         <div id = logInPage> 
-            <button id = logIn>Log In</button>
+            <p><h1>Welcome to Daily Diary Hub</h1></p>
+            <p><button id = logIn >Log In</button></p>
         </div>
 
         <div id = "container" class = hide>
       
-            <header>
+            <div class = "heading">
                 <h1>Daily Diary Hub</h1>
-              <nav>
+              <div class = "navigation">
                 <p>Username</p>
                 <p><button id = "logOut">log out</button></p>
                 <p><button id = "changeTheme" >change theme</button></p>
-              </nav>
-            </header>
+              </div>
+            </div>
       
             <div class = "quoteContainer">
               <div class = "quote">
@@ -471,7 +495,7 @@
             </div>
               
             <div id = "entryContainer">
-              the entries will append here
+             
             </div>
             
             
