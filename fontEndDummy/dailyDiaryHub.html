@@ -280,7 +280,7 @@
                     entryBtns.appendChild(deleteBtn)
 
                     myDiv = document.createElement("div")
-                    myDiv.id = "entryDiv"
+                    myDiv.id = "entryDiv" + index
                     myDiv.appendChild(myHeader)
                     myDiv.appendChild(newDate)
                     myDiv.appendChild(newParagraph)
@@ -290,7 +290,11 @@
             }
 
             $(document).on('click','#deleteEntry',function(){
-                console.log(event.srcElement.value);
+                entries.splice(event.srcElement.value, 1);
+                div2remove = "entryDiv" + event.srcElement.value;
+                node = document.getElementById(div2remove)
+                entryContainer.removeChild(node)
+                console.log(entries)
             })
             
             $(document).on('click','#editEntry',function(){
