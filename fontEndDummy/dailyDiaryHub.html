@@ -241,34 +241,63 @@
                 newObject = {title: myTitle, date: myDate, text: myText}
                 entries.push(newObject)
                 console.log(entries)
-                loadEntries()
+                loadEntry(entries.length-1)
             }
 
             entryContainer = document.getElementById("entryContainer")
             
             function loadEntries() {
                 var counter = 0;
-                entries.forEach(entry => {
-                    newTitle = document.createTextNode(entry.title)
+                entries.slice().reverse().forEach(entry => {
+                    loadEntry(counter)
+                    counter++
+                });
+            }
+
+            function loadEntry(index)
+            {
+                entry = entries[index]
+                newTitle = document.createTextNode(entry.title)
                     newDate = document.createTextNode(entry.date)
                     newParagraph = document.createTextNode(entry.text)
                     myHeader = document.createElement("h1")
                     myHeader.appendChild(newTitle)
+                    
                     deleteBtn = document.createElement("button")
                     deleteBtn.innerText = "delete"
                     deleteBtn.id = "deleteEntry"
-                    deleteBtn.value = counter
+                    deleteBtn.value = index
+
+                    editBtn = document.createElement("button")
+                    editBtn.innerText = "edit"
+                    editBtn.id = "editEntry"
+                    editBtn.value = index
+                    
+                    entryBtns = document.createElement("div")
+                    entryBtns.id = "entryBtnsDiv"
+
+                    entryBtns.appendChild(editBtn)
+                    entryBtns.appendChild(deleteBtn)
+
                     myDiv = document.createElement("div")
+                    myDiv.id = "entryDiv"
                     myDiv.appendChild(myHeader)
                     myDiv.appendChild(newDate)
                     myDiv.appendChild(newParagraph)
-                    myDiv.appendChild(deleteBtn)
+                    myDiv.appendChild(entryBtns)
 
-                    entryContainer.appendChild(myDiv)
-                    counter++
-                });
+                    entryContainer.insertBefore(myDiv, entryContainer.childNodes[0])
             }
+
+            $(document).on('click','#deleteEntry',function(){
+                console.log(event.srcElement.value);
+            })
             
+            $(document).on('click','#editEntry',function(){
+                console.log("bruh");
+            })
+
+            loadEntries()
         };
 
     </script>
