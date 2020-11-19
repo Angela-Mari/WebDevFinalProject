@@ -80,25 +80,58 @@
             background-color: var(--neutral-accent);
             border-radius: 20px;
         }
+
+        .hide {
+            display: none;
+        }
     </style>
     <script>
-        const quotes = ["hey girl", "you got this", "don't give up"];
+        
 
         window.addEventListener("DOMContentLoaded", domLoaded);
+
         function domLoaded() {
+            const logInPage = document.getElementById('logInPage')
+            const logInBtn = document.getElementById('logIn')
+            logInBtn.addEventListener('click', logIn)
+
+
+            const quotes = ["hey girl", "you got this", "don't give up"];
+            const mainPage = document.getElementById('container')
+            const logOutBtn = document.getElementById('logOut')
+            logOutBtn.addEventListener('click', logOut)
+
+            
+            
+
+            function logOut(){
+                mainPage.classList.add("hide")
+                logInPage.classList.remove("hide")
+            }
+
+            function logIn(){
+                logInPage.classList.add("hide")
+                mainPage.classList.remove("hide")
+            }
 
         };
 
+        
     </script>
 </head>
     <body>
-        <div class = "container">
+
+        <div id = logInPage> 
+            <button id = logIn>Log In</button>
+        </div>
+
+        <div id = "container" class = hide>
       
             <header>
             <h1>Daily Diary Hub</h1>
               <nav>
                 <p>Username</p>
-                <p><button>log out</button></p>
+                <p><button id = "logOut">log out</button></p>
                 <p><button id = "change_theme" >change theme</button></p>
               </nav>
             </header>
@@ -114,7 +147,7 @@
             
             <div class = "controls">
                 <input value />
-                <button class = "write_btn" onClick= {writeEntry}>write</button>
+                <button class = "write_btn" >write</button>
             </div>
               
             <div>
