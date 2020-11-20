@@ -4,11 +4,12 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "pwa-chrome",
             "request": "launch",
             "name": "Open dailyDiaryHub.html",
-            "file": "/Users/angelageorge/Desktop/fontEndDummy/dailyDiaryHub.html"
+            "file": "/Users/angelageorge/Desktop/CPSC314/cpsc-314-web-development-final-project-Angela-Mari/fontEndDummy/dailyDiaryHub.html"
         }
     ]
 }
