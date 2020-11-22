@@ -5,6 +5,7 @@ import ChangeTheme from './ChangeTheme.js';
 import DiaryCards from './DiaryCards.js';
 import NewEntry from './NewEntry';
 import QuoteContainer from './QuoteContainer'
+import SocialMedia from './SocialMedia.js';
 
 function Hub() {
     const { user, isAuthenticated } = useAuth0();
@@ -21,6 +22,8 @@ function Hub() {
 
         
     }
+
+    
     return (
         isAuthenticated && (
             <div>
@@ -38,11 +41,13 @@ function Hub() {
                     <div style = {sidebar}>
                         <QuoteContainer />
                         <NewEntry />
+                        <div>
+                            <SocialMedia />
+                        </div>
                     </div>
                     
                     <DiaryCards />
                 </div>
-                
                 {/*JSON.stringify(user, null, 2)} */}
             </div>
         )
