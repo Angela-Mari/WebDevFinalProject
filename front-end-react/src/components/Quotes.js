@@ -1,4 +1,4 @@
-export default [{
+const myQuotes = [{
   quote: 'Turn the music up!',
   author: 'me',
 },
@@ -11,3 +11,5 @@ export default [{
   author: 'noone',
 }
 ];
+
+export default myQuotes

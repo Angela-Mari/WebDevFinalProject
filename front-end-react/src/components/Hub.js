@@ -29,7 +29,7 @@ function Hub() {
             <div>
                 <div className = "header">
                     <h1>Daily Diary Hub</h1>
-                    
+                    <QuoteContainer />
                     <div className = "navBttns">
                         
                         <img src = {user.picture} alt = {user.name} className = "profilePic"/>
@@ -39,7 +39,7 @@ function Hub() {
                 </div>
                 <div style = {mainContent}>
                     <div style = {sidebar}>
-                        <QuoteContainer />
+                        
                         <NewEntry />
                         <div>
                             <SocialMedia />
