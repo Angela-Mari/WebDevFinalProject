@@ -4,6 +4,7 @@ import LogoutButton from './LogoutButton.js';
 import ChangeTheme from './ChangeTheme.js';
 import DiaryCards from './DiaryCards.js';
 import NewEntry from './NewEntry';
+import QuoteContainer from './QuoteContainer'
 
 function Hub() {
     const { user, isAuthenticated } = useAuth0();
@@ -12,23 +13,33 @@ function Hub() {
         flexDirection: "row",
         alignItems : "flex-start"
     }
+    const sidebar = {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "green"
+
+        
+    }
     return (
         isAuthenticated && (
             <div>
                 <div className = "header">
                     <h1>Daily Diary Hub</h1>
-                    <div className = "quoteContainer">
-                        this will store quotes
-                    </div>
+                    
                     <div className = "navBttns">
-                        <h2>{user.name}</h2>
+                        
                         <img src = {user.picture} alt = {user.name} className = "profilePic"/>
                         <LogoutButton />
                         <ChangeTheme />
                     </div>
                 </div>
                 <div style = {mainContent}>
-                    <NewEntry />
+                    <div style = {sidebar}>
+                        <QuoteContainer />
+                        <NewEntry />
+                    </div>
+                    
                     <DiaryCards />
                 </div>
                 

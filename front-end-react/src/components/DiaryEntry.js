@@ -8,15 +8,19 @@ function DiaryEntry(props) {
         alignItems: "center",
         padding : 20,
     }
-
+    console.log(props.entry)
+    console.log(props.entry.title)
+    console.log("bruh")
     return (
         <div>
             <div style = {titleContainer}>
-                <h2>{props.title}</h2>
-                <h3>{props.date}</h3>
+                <h2>{props.entry.title}</h2>
+                <h3>{props.entry.date}</h3>
             </div>   
             <hr />
-            <p>{props.text}</p>
+            <p>{props.entry.text}</p>
+            <button>edit</button>
+            <button>delete</button>
         </div>
     )
 }

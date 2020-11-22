@@ -1,4 +1,3 @@
-import { findByLabelText } from '@testing-library/react';
 import React from 'react';
 
 function NewEntry () {
@@ -24,7 +23,7 @@ function NewEntry () {
             
             <p> 
                 <textarea rows="7"></textarea>
-                <button>Done</button>
+                <button type = "submit">Done</button>
             </p>
             
         </div>

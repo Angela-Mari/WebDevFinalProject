@@ -1,5 +1,6 @@
 import React from 'react';
 import DiaryEntry from './DiaryEntry'
+import Entries from './Entries'
 
 function DiaryCards() {
 
@@ -8,24 +9,11 @@ function DiaryCards() {
         gridTemplateColumns: "repeat(3, 1fr)",
         gap: 10,
     }
-    
+
+    const entriesArray = Entries.map(item => <DiaryEntry entry = {item}/>)
     return (
         <div style = {myGridStyle}>
-            <DiaryEntry 
-                title = "the worst day ever" 
-                date = "12/25/2002" 
-                text = "gjaoiernvinwivnriuqf euiv"
-            />
-            <DiaryEntry 
-                title = "the best day ever" 
-                date = "12/25/2002" 
-                text = "gjaoiernvinwivnriuqf euiv"
-            />
-            <DiaryEntry 
-                title = "the best day ever" 
-                date = "12/25/2002" 
-                text = "gjaoiernvinwivnriuqf euiv"
-            />
+            {entriesArray}
         </div>
     )
     
