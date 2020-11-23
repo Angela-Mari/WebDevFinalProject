@@ -5,22 +5,27 @@ class DiaryCards extends React.Component {
 
     constructor(props){
         super()
-        this.state = {
-            entries : props.entries 
-        }
+        
+        //this.changeHandler = this.changeHandler.bind(this)
         //console.log(this.state.entries)
     }
 
     render(){
+        //console.log("rendering diary cards")
+        //console.log(this.props.entries)
         const myGridStyle = {
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: 10,
         }
-
-        const entriesArray = this.state.entries.map((item, curIndex) => {
-        return (<DiaryEntry entry = {item} entryIndex = {curIndex}/>)});
+        const entriesArray = this.props.entries.map((item, curIndex = 0) => {
+        //console.log("item:")
+        //console.log(item)
+        ++curIndex
+        return (<DiaryEntry entry = {item} key = {curIndex} entryIndex = {curIndex} changeHandler = {this.props.changeHandler}/>)
+        });
         
+
         return (
             <div style = {myGridStyle}>
                 {entriesArray}
