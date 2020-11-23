@@ -26,21 +26,27 @@ function Hub() {
     const entryArray = [
         {
         title: 'Best Day Ever',
-        date: '10/10/2010',
+        date: '2010-07-22',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' 
       },
       {
         title: 'I met the love of my life',
-        date: '10/20/2013',
+        date: '2010-05-14',
         text: 'hah not really but Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a risus mi.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a risus mi.'
       },
       {
         title: 'My third entry',
-        date: 'noone',
+        date: '2010-04-22',
         text: 'bruh does this even count?'
       }];
 
+
+
     const [displayArray, setArray] = React.useState(entryArray);
+    const [newTitle, setTitle] = React.useState("");
+    const [newDate, setDate] = React.useState("");
+    const [newText, setText] = React.useState("");
+
      //console.log(displayArray)
       //console.log(displayArray)
     //const [changeEntry, setEntry] = React.useState({});
@@ -48,6 +54,9 @@ function Hub() {
     function submitHandler(myNewEntry) {
         console.log("submitHandler")
         setArray([...displayArray, myNewEntry])
+        setTitle("")
+        setDate("")
+        setText("")
     }
 
     function changeHandler(editObject){
@@ -69,6 +78,11 @@ function Hub() {
 
     function editEntry(editObject) {
         console.log("edit")
+        let editThisEntry = displayArray[editObject.entryIndex-1];
+        setTitle(editThisEntry.title)
+        setDate(editThisEntry.date)
+        setText(editThisEntry.text)
+        deleteEntry(editObject)
     }
 
     return (
@@ -87,7 +101,7 @@ function Hub() {
                 <div style = {mainContent}>
                     
                     <div style = {sidebar}>   
-                        <NewEntry submitHandler = {submitHandler}/>
+                        <NewEntry title = {newTitle} date = {newDate} text = {newText} submitHandler = {submitHandler}/>
                         <SocialMedia />
                     </div>
                     

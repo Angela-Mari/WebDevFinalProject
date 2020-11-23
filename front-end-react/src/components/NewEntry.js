@@ -3,12 +3,6 @@ import React from 'react';
 class NewEntry extends React.Component {
     constructor () {
         super()
-        this.state = {
-            //date and text are not passed in correctly from handelChange
-            title : '',
-            date : '',
-            text : ''
-        }
         this.handelChange = this.handelChange.bind(this)
         this.submiter = this.submiter.bind(this)
     }
@@ -22,7 +16,8 @@ class NewEntry extends React.Component {
 
     submiter(event){
         event.preventDefault()
-        this.props.submitHandler(this.state)
+        this.props.submitHandler(this.props) 
+        
     }
 
     render () {
@@ -37,20 +32,20 @@ class NewEntry extends React.Component {
 
         return (
             <form style = {NewEntryContainer}>
-                <h2>Today</h2>
+                <h2>Write Entry</h2>
                 <hr />
                 <p>
                     <label for = "newTitle">Title:  </label>
-                    <input type="text" name= "title" onChange = {this.handelChange} />
+                    <input type="text" name= "title" value = {this.props.title} onChange = {this.handelChange} />
                 </p>
                 
                 <p>
                     <label for = "newDate">Date: </label>
-                    <input type="date" name= "date" id="newDate" onChange = {this.handelChange}/>
+                    <input type="date" name= "date" id="newDate" value = {this.props.date} onChange = {this.handelChange}/>
                 </p>
                 
                 <p> 
-                    <textarea name="text" rows="7" onChange = {this.handelChange}/>
+                    <textarea name="text" rows="7" value = {this.props.text} onChange = {this.handelChange}/>
                     <button onClick = {this.submiter}>Done</button>
                 </p>
                 
