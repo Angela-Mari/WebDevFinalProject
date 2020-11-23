@@ -20,6 +20,7 @@ class DiaryCards extends React.Component {
 
         const entriesArray = this.state.entries.map((item, curIndex) => {
         return (<DiaryEntry entry = {item} entryIndex = {curIndex}/>)});
+        
         return (
             <div style = {myGridStyle}>
                 {entriesArray}

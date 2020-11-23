@@ -46,11 +46,11 @@ class NewEntry extends React.Component {
                 
                 <p>
                     <label for = "newDate">Date: </label>
-                    <input type="date" name= "date" id="newDate" />
+                    <input type="date" name= "date" id="newDate" onChange = {this.handelChange}/>
                 </p>
                 
                 <p> 
-                    <textarea name="text" rows="7" />
+                    <textarea name="text" rows="7" onChange = {this.handelChange}/>
                     <button onClick = {this.submiter}>Done</button>
                 </p>
                 
