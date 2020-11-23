@@ -6,7 +6,7 @@ import DiaryCards from './DiaryCards.js';
 import NewEntry from './NewEntry';
 import QuoteContainer from './QuoteContainer'
 import SocialMedia from './SocialMedia.js';
-
+//change to class with constructor, store an array with quotes and append quotes as needed from newestEntry
 function Hub() {
     const { user, isAuthenticated } = useAuth0();
     const mainContent = {
@@ -23,6 +23,13 @@ function Hub() {
         
     }
 
+    const [newestEntry, setEntry] = React.useState({});
+
+    function submitHandler(myNewEntry) {
+        console.log(myNewEntry)
+        setEntry(myNewEntry);
+        console.log(newestEntry);
+    }
     
     return (
         isAuthenticated && (
@@ -40,7 +47,8 @@ function Hub() {
                 <div style = {mainContent}>
                     <div style = {sidebar}>
                         
-                        <NewEntry />
+                        <NewEntry newestEntry = {newestEntry} submitHandler = {submitHandler}/>
+
                         <div>
                             <SocialMedia />
                         </div>

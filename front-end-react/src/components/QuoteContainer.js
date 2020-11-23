@@ -74,7 +74,7 @@ class QuoteContainer extends React.Component{
                 <div style = {quotesInner}>
                     <h3>{myQuotes[this.state.index].quote}</h3>
                     <p>-{myQuotes[this.state.index].author}</p>
-                    <button>+</button>
+                    <button onClick = {this.addQuote}>+</button>
                 </div>
                 <button onClick = {this.forwardIndex}>forward</button>
             </div>

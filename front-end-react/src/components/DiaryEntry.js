@@ -8,9 +8,7 @@ function DiaryEntry(props) {
         alignItems: "center",
         padding : 20,
     }
-    console.log(props.entry)
-    console.log(props.entry.title)
-    console.log("bruh")
+    
     return (
         <div>
             <div style = {titleContainer}>
