@@ -48,8 +48,8 @@ function Hub() {
 
     function submitHandler(myNewEntry) {
         console.log("submitHandler")
-        setEntry(myNewEntry)
-        setArray([...displayArray, newestEntry])
+        //setEntry(myNewEntry)
+        setArray([...displayArray, myNewEntry])
         //console.log(newestEntry);
         //entryArray.push(newestEntry);
         //console.log(myNewEntry)
