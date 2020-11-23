@@ -14,14 +14,19 @@ class DiaryEntry extends React.Component {
     }
     
     buttonClicked(event){
-        const change = event.target.name;
-        this.setState({[change]: true}, () => { 
-            console.log("set state DiaryEntry")
-            console.log(this.state)
-            this.props.changeHandler(this.state)
-        });
-          
-        
+        if (event.target.name === "edit"){
+            this.props.changeHandler(
+                {entryIndex: this.props.entryIndex,
+                    change: "edit"
+            })
+
+        }
+        else{
+            this.props.changeHandler(
+                {entryIndex: this.props.entryIndex,
+                    change: "delete"
+            })
+        }  
     }
     
     render () {
@@ -33,9 +38,6 @@ class DiaryEntry extends React.Component {
         padding : 20,
     }
 
-    //console.log("diary entry:")
-    //console.log(this.props.entryIndex)
-    //console.log(this.props.entry)
     return (
         <div>
             

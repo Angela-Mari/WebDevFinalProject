@@ -52,27 +52,23 @@ function Hub() {
 
     function changeHandler(editObject){
         console.log("hub -> diary cards")
-        deleteEntry(editObject)
+        if (editObject.change === "delete"){
+            deleteEntry(editObject)
+        }
+        else {
+            editEntry(editObject)
+        }
+        
     }
 
     function deleteEntry(editObject) {
-        console.log("delete")
-       console.log(editObject.entryIndex)
        setArray(displayArray => displayArray.filter((item , i) => { 
-           console.log(item)
-           console.log(i)
-           //console.log(item.entryIndex)
-           console.log(editObject.entryIndex-1)
            if (i !== editObject.entryIndex-1)
             return item }))
-       console.log(displayArray)
-       
     }
 
-    function updateArray() {
-        console.log("updatting display")
-        setArray(entryArray)  
-        console.log(displayArray)
+    function editEntry(editObject) {
+        console.log("edit")
     }
 
     return (
