@@ -2,6 +2,7 @@ import React from 'react'
 
 function DiaryEntry(props) {
 
+    console.log(props.entryIndex)
     const titleContainer = {
         display: "flex",
         flexDirection : "row",

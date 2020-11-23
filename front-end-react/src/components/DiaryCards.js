@@ -6,8 +6,7 @@ class DiaryCards extends React.Component {
     constructor(props){
         super()
         this.state = {
-            entries : props.entries
-            
+            entries : props.entries 
         }
         //console.log(this.state.entries)
     }
@@ -19,7 +18,8 @@ class DiaryCards extends React.Component {
             gap: 10,
         }
 
-        const entriesArray = this.state.entries.map(item => <DiaryEntry entry = {item}/>)
+        const entriesArray = this.state.entries.map((item, curIndex) => {
+        return (<DiaryEntry entry = {item} entryIndex = {curIndex}/>)});
         return (
             <div style = {myGridStyle}>
                 {entriesArray}
