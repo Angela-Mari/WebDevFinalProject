@@ -40,7 +40,6 @@ function Hub() {
         text: 'bruh does this even count?'
       }];
 
-    const [newestEntry, setEntry] = React.useState({});
     const [displayArray, setArray] = React.useState(entryArray);
      //console.log(displayArray)
       //console.log(displayArray)
@@ -48,13 +47,7 @@ function Hub() {
 
     function submitHandler(myNewEntry) {
         console.log("submitHandler")
-        //setEntry(myNewEntry)
         setArray([...displayArray, myNewEntry])
-        //console.log(newestEntry);
-        //entryArray.push(newestEntry);
-        //console.log(myNewEntry)
-        //console.log(entryArray.length)
-        //updateArray()
     }
 
     function changeHandler(editObject){
@@ -63,10 +56,17 @@ function Hub() {
     }
 
     function deleteEntry(editObject) {
+        console.log("delete")
        console.log(editObject.entryIndex)
-       entryArray.splice(editObject.entryIndex)
-       console.log("delete")
-       updateArray()
+       setArray(displayArray => displayArray.filter((item , i) => { 
+           console.log(item)
+           console.log(i)
+           //console.log(item.entryIndex)
+           console.log(editObject.entryIndex-1)
+           if (i !== editObject.entryIndex-1)
+            return item }))
+       console.log(displayArray)
+       
     }
 
     function updateArray() {
@@ -91,7 +91,7 @@ function Hub() {
                 <div style = {mainContent}>
                     
                     <div style = {sidebar}>   
-                        <NewEntry newestEntry = {newestEntry} submitHandler = {submitHandler}/>
+                        <NewEntry submitHandler = {submitHandler}/>
                         <SocialMedia />
                     </div>
                     
