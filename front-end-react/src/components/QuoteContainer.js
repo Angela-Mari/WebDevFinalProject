@@ -1,5 +1,5 @@
 import React from 'react';
-import myQuotes from './Quotes';
+import QuoteForm from './QuoteForm';
 
 const displayQuotes = {
     display: 'flex',
@@ -17,19 +17,35 @@ const quotesInner = {
     padding: 20
 }
 
-
+let myQuotes = [{
+    quote: 'Turn the music up!',
+    author: 'me',
+  },
+  {
+    quote: 'Choose your music',
+    author: 'you',
+  },
+  {
+    quote: 'Unlimited, streaming, ad-free',
+    author: 'noone',
+  }
+  ];
 
 class QuoteContainer extends React.Component{
     constructor(){
         super()
         this.state = {
             index: 0,
-            length: myQuotes.length -1 
+            length: myQuotes.length -1,
+            showMyComponent : true
         }
         this.backupIndex = this.backupIndex.bind(this)
         this.forwardIndex = this.forwardIndex.bind(this)
+        this.addQuote = this.addQuote.bind(this)
+        this.submitQuote = this.submitQuote.bind(this)
     }
 
+    
     backupIndex(){
         this.setState(prevState => {
             
@@ -66,15 +82,44 @@ class QuoteContainer extends React.Component{
         })
     }
 
+    addQuote(){
+        console.log("add quote")
+        this.setState(prevState => {
+            return {
+                index: prevState.index,
+                length : prevState.length,
+                showMyComponent : !prevState.showMyComponent
+            }
+        })
+    }
+
+    submitQuote(newQuote){
+        console.log(newQuote)
+        myQuotes.push(newQuote)
+        this.setState(prevState => {
+            return {
+                index: myQuotes.length-1,
+                length : myQuotes.length-1,
+                showMyComponent : !prevState.showMyComponent
+            } 
+        })
+        console.log(myQuotes)
+    }
     render() {
 
         return(
             <div style = {displayQuotes}>
                 <button onClick = {this.backupIndex}>back</button>
-                <div style = {quotesInner}>
-                    <h3>{myQuotes[this.state.index].quote}</h3>
-                    <p>-{myQuotes[this.state.index].author}</p>
-                    <button onClick = {this.addQuote}>+</button>
+                <div>
+                    { this.state.showMyComponent && 
+                    <div style = {quotesInner}>
+                        <h3>{myQuotes[this.state.index].quote}</h3>
+                        <p>-{myQuotes[this.state.index].author}</p>
+                        <button onClick = {this.addQuote}>+</button>
+                    </div>
+                    }
+                    {!this.state.showMyComponent && <QuoteForm submitQuote = {this.submitQuote}/>}
+                    
                 </div>
                 <button onClick = {this.forwardIndex}>forward</button>
             </div>
