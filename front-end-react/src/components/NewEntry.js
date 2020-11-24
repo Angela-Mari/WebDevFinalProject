@@ -1,8 +1,14 @@
 import React from 'react';
 
 class NewEntry extends React.Component {
-    constructor () {
+    constructor (props) {
         super()
+        this.state = {
+            title : props.title,
+            date : props.date,
+            text : props.text
+
+        }
         this.handelChange = this.handelChange.bind(this)
         this.submiter = this.submiter.bind(this)
     }
@@ -16,8 +22,7 @@ class NewEntry extends React.Component {
 
     submiter(event){
         event.preventDefault()
-        this.props.submitHandler(this.props) 
-        
+        this.props.submitHandler(this.state)      
     }
 
     render () {
@@ -36,16 +41,16 @@ class NewEntry extends React.Component {
                 <hr />
                 <p>
                     <label for = "newTitle">Title:  </label>
-                    <input type="text" name= "title" value = {this.props.title} onChange = {this.handelChange} />
+                    <input type="text" name= "title" value = {this.state.title} onChange = {this.handelChange} />
                 </p>
                 
                 <p>
                     <label for = "newDate">Date: </label>
-                    <input type="date" name= "date" id="newDate" value = {this.props.date} onChange = {this.handelChange}/>
+                    <input type="date" name= "date" id="newDate" value = {this.state.date} onChange = {this.handelChange}/>
                 </p>
                 
                 <p> 
-                    <textarea name="text" rows="7" value = {this.props.text} onChange = {this.handelChange}/>
+                    <textarea name="text" rows="7" value = {this.state.text} onChange = {this.handelChange}/>
                     <button onClick = {this.submiter}>Done</button>
                 </p>
                 

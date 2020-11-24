@@ -55,7 +55,10 @@ function Hub() {
 
     function submitHandler(myNewEntry) {
         console.log("submitHandler")
+        console.log(myNewEntry)
         setArray([...displayArray, myNewEntry])
+        //setSearch(displayArray)
+        console.log(displayArray)
         setTitle("")
         setDate("")
         setText("")
@@ -75,7 +78,8 @@ function Hub() {
     function deleteEntry(editObject) {
        setArray(displayArray => displayArray.filter((item , i) => { 
            if (i !== editObject.entryIndex-1)
-            return item }))
+            return item })
+            )
     }
 
     function editEntry(editObject) {
@@ -90,7 +94,7 @@ function Hub() {
     function searchHandler(keyword) {
         console.log("hub-> searchHandler")
         if (keyword !== ""){
-            setSearch(displayArray => displayArray.filter((item , i) => { 
+            setSearch(displayArray.filter((item , i) => { 
                 if (displayArray[i].text.includes(keyword) || displayArray[i].title.includes(keyword))
                 {
                  return item 
@@ -99,26 +103,8 @@ function Hub() {
             console.log(searchArray)
         }
         else {
-            setSearch(displayArray)
+            setSearch([])
         }
-        
-        
-        
-        // if (keyword !== ""){
-
-        //     setSearch(displayArray.filter((item , i) => { 
-               
-        //         if (displayArray[i].text.includes(keyword) || displayArray[i].title.includes(keyword))
-        //         {
-        //          return item 
-        //         }
-                
-        //         })
-        // }
-        // else {
-        //     setSearch(displayArray)
-        // }
-        
     }
 
     return (
@@ -141,7 +127,7 @@ function Hub() {
                         <SocialMedia />
                     </div>
                     <SearchBar searchHandler = {searchHandler} value = ""/>
-                    <DiaryCards entries = {searchArray} changeHandler = {changeHandler} />
+                    <DiaryCards entries = {searchArray.length > 0  ? searchArray : displayArray} changeHandler = {changeHandler} />
                 </div>
                 {/*JSON.stringify(user, null, 2)} */}
             </div>
