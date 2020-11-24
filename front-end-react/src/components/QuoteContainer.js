@@ -43,6 +43,7 @@ class QuoteContainer extends React.Component{
         this.forwardIndex = this.forwardIndex.bind(this)
         this.addQuote = this.addQuote.bind(this)
         this.submitQuote = this.submitQuote.bind(this)
+        this.minusQuote = this.minusQuote.bind(this)
     }
 
     
@@ -86,9 +87,29 @@ class QuoteContainer extends React.Component{
         console.log("add quote")
         this.setState(prevState => {
             return {
-                index: prevState.index,
-                length : prevState.length,
+                index: myQuotes.length-1,
+                length : myQuotes.length-1,
                 showMyComponent : !prevState.showMyComponent
+            }
+        })
+    }
+
+    minusQuote(){
+        console.log("minus")
+        if (myQuotes.length === 1){
+            myQuotes[0].quote = ""
+            myQuotes[0].author = ""
+            this.setState({})
+            return
+        }
+        console.log(this.state.index)
+        myQuotes.splice(this.state.index, this.state.index+1)
+        console.log(myQuotes)
+        this.setState(prevState => {
+            return {
+                index: 0,
+                length : myQuotes.length-1,
+                showMyComponent : prevState.showMyComponent
             }
         })
     }
@@ -116,6 +137,7 @@ class QuoteContainer extends React.Component{
                         <h3>{myQuotes[this.state.index].quote}</h3>
                         <p>-{myQuotes[this.state.index].author}</p>
                         <button onClick = {this.addQuote}>+</button>
+                        <button onClick = {this.minusQuote}>-</button>
                     </div>
                     }
                     {!this.state.showMyComponent && <QuoteForm submitQuote = {this.submitQuote}/>}
