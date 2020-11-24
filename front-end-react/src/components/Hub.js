@@ -64,6 +64,13 @@ function Hub() {
         setText("")
     }
 
+    function updateValue(newValues){
+        console.log("updating vals")
+        setTitle(prevState => [...prevState, newValues.title])
+        setDate(newValues.date)
+        setText(prevState => [...prevState, newValues.text])
+    }
+
     function changeHandler(editObject){
         console.log("hub -> diary cards")
         if (editObject.change === "delete"){
@@ -122,8 +129,9 @@ function Hub() {
                 </div>
                 <div style = {mainContent}>
                     
-                    <div style = {sidebar}>   
-                        <NewEntry title = {newTitle} date = {newDate} text = {newText} submitHandler = {submitHandler}/>
+                    <div style = {sidebar}>  
+                    {console.log(newTitle)} 
+                        <NewEntry title = {newTitle} date = {newDate} text = {newText} submitHandler = {submitHandler} updateValue = {updateValue}/>
                         <SocialMedia />
                     </div>
                     <SearchBar searchHandler = {searchHandler} value = ""/>
