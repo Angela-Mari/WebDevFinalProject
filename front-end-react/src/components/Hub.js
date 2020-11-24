@@ -64,13 +64,6 @@ function Hub() {
         setText("")
     }
 
-    function updateValue(newValues){
-        console.log("updating vals")
-        setTitle(prevState => [...prevState, newValues.title])
-        setDate(newValues.date)
-        setText(prevState => [...prevState, newValues.text])
-    }
-
     function changeHandler(editObject){
         console.log("hub -> diary cards")
         if (editObject.change === "delete"){
@@ -98,6 +91,19 @@ function Hub() {
         deleteEntry(editObject)
     }
 
+    function updateValue(newValues){
+        console.log("updating vals")
+        if (newValues.title){
+            setTitle(newValues.title)
+        }
+        if (newValues.date){
+            setDate(newValues.date)
+        }
+        if (newValues.text){
+            setText(newValues.text)
+        }
+    }
+    
     function searchHandler(keyword) {
         console.log("hub-> searchHandler")
         if (keyword !== ""){

@@ -17,28 +17,25 @@ class NewEntry extends React.Component {
         console.log("is changing")
         
         const {name, value} = event.target
-        this.setState({
-            [name] : value
-        })
-
-        console.log(this.state)
-        this.props.updateValue(this.state)
+        this.props.updateValue({[name] : value})
     }
 
+    
     submiter(event){
         event.preventDefault()
-        this.props.submitHandler(this.state)      
+        var myObject = {title: "", date: "", text: ""}
+            myObject.title = this.props.title
+            myObject.date = this.props.date
+            myObject.text = this.props.text
+        this.props.submitHandler(myObject)      
     }
 
     
     render () {
-        console.log("newTitle")
-        console.log(this.props.title)
 
         const NewEntryContainer = {
-            //display: "flex",
-            //flexDirection: "column",
-    
+            display: "flex",
+            flexDirection: "column",
             padding : 20,
         }
 
