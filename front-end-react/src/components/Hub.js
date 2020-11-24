@@ -49,23 +49,14 @@ function Hub() {
     const [newDate, setDate] = React.useState("");
     const [newText, setText] = React.useState("");
 
-     //console.log(displayArray)
-      //console.log(displayArray)
-    //const [changeEntry, setEntry] = React.useState({});
-
-    function submitHandler(myNewEntry) {
-        console.log("submitHandler")
-        console.log(myNewEntry)
+    function submitHandler(myNewEntry) {   
         setArray([...displayArray, myNewEntry])
-        //setSearch(displayArray)
-        console.log(displayArray)
         setTitle("")
         setDate("")
         setText("")
     }
 
     function changeHandler(editObject){
-        console.log("hub -> diary cards")
         if (editObject.change === "delete"){
             deleteEntry(editObject)
         }
@@ -83,7 +74,6 @@ function Hub() {
     }
 
     function editEntry(editObject) {
-        console.log("edit")
         let editThisEntry = displayArray[editObject.entryIndex-1];
         setTitle(editThisEntry.title)
         setDate(editThisEntry.date)
@@ -92,7 +82,6 @@ function Hub() {
     }
 
     function updateValue(newValues){
-        console.log("updating vals")
         if (newValues.title){
             setTitle(newValues.title)
         }
@@ -105,7 +94,6 @@ function Hub() {
     }
     
     function searchHandler(keyword) {
-        console.log("hub-> searchHandler")
         if (keyword !== ""){
             setSearch(displayArray.filter((item , i) => { 
                 if (displayArray[i].text.includes(keyword) || displayArray[i].title.includes(keyword))
@@ -113,7 +101,6 @@ function Hub() {
                  return item 
                 }
             }))
-            console.log(searchArray)
         }
         else {
             setSearch([])
@@ -136,7 +123,6 @@ function Hub() {
                 <div style = {mainContent}>
                     
                     <div style = {sidebar}>  
-                    {console.log(newTitle)} 
                         <NewEntry title = {newTitle} date = {newDate} text = {newText} submitHandler = {submitHandler} updateValue = {updateValue}/>
                         <SocialMedia />
                     </div>

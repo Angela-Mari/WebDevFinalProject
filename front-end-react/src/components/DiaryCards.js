@@ -17,6 +17,7 @@ class DiaryCards extends React.Component {
             gap: 10,
         }
 
+        
 
         const entriesArray = this.props.entries.map((item, curIndex = 0) => {
         

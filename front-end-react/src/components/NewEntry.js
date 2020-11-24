@@ -14,8 +14,6 @@ class NewEntry extends React.Component {
     }
 
     handelChange(event) {
-        console.log("is changing")
-        
         const {name, value} = event.target
         this.props.updateValue({[name] : value})
     }
