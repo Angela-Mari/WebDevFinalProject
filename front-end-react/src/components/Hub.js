@@ -6,6 +6,7 @@ import DiaryCards from './DiaryCards.js';
 import NewEntry from './NewEntry';
 import QuoteContainer from './QuoteContainer'
 import SocialMedia from './SocialMedia.js';
+import SearchBar from './SearchBar'
 // store an array with quotes and append quotes as needed from newest
 function Hub() {
     const { user, isAuthenticated } = useAuth0();
@@ -43,6 +44,7 @@ function Hub() {
 
 
     const [displayArray, setArray] = React.useState(entryArray);
+    const [searchArray, setSearch] = React.useState([])
     const [newTitle, setTitle] = React.useState("");
     const [newDate, setDate] = React.useState("");
     const [newText, setText] = React.useState("");
@@ -85,6 +87,40 @@ function Hub() {
         deleteEntry(editObject)
     }
 
+    function searchHandler(keyword) {
+        console.log("hub-> searchHandler")
+        if (keyword !== ""){
+            setSearch(displayArray => displayArray.filter((item , i) => { 
+                if (displayArray[i].text.includes(keyword) || displayArray[i].title.includes(keyword))
+                {
+                 return item 
+                }
+            }))
+            console.log(searchArray)
+        }
+        else {
+            setSearch(displayArray)
+        }
+        
+        
+        
+        // if (keyword !== ""){
+
+        //     setSearch(displayArray.filter((item , i) => { 
+               
+        //         if (displayArray[i].text.includes(keyword) || displayArray[i].title.includes(keyword))
+        //         {
+        //          return item 
+        //         }
+                
+        //         })
+        // }
+        // else {
+        //     setSearch(displayArray)
+        // }
+        
+    }
+
     return (
         isAuthenticated && (
             <div>
@@ -104,8 +140,8 @@ function Hub() {
                         <NewEntry title = {newTitle} date = {newDate} text = {newText} submitHandler = {submitHandler}/>
                         <SocialMedia />
                     </div>
-                    
-                    <DiaryCards entries = {displayArray} changeHandler = {changeHandler} />
+                    <SearchBar searchHandler = {searchHandler} value = ""/>
+                    <DiaryCards entries = {searchArray} changeHandler = {changeHandler} />
                 </div>
                 {/*JSON.stringify(user, null, 2)} */}
             </div>
