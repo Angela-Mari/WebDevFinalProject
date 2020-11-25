@@ -8,7 +8,8 @@ class DiaryEntry extends React.Component {
         this.state = {
             entryIndex : props.entryIndex,
             edit : false,
-            delete : false
+            delete : false,
+            isShown : false
         }
         this.buttonClicked = this.buttonClicked.bind(this)
     }
@@ -35,20 +36,45 @@ class DiaryEntry extends React.Component {
         display: "flex",
         flexDirection : "row",
         alignItems: "center",
-        padding : 20,
+        paddingTop : 5,
+        //paddingBottom : 5,
+        margin : 10
+    }
+
+    const textStyle = {
+        padding : 20
+    }
+
+    const button = {
+        borderColor : "transparent",
+        backgroundColor : "white",
+        borderRadius : 20,
+        margin : 5,
+        paddingRight: 10,
+        paddingLeft: 10
     }
 
     return (
-        <div>
+        <div 
+        onMouseEnter={() => this.setState({isShown : true})}
+        onMouseLeave={() => this.setState({isShown : false})} 
+        style = {{backgroundColor : "powderblue", margin : 10, padding :10, borderRadius : 20}}
+        >
             
             <div style = {titleContainer}>
-                <h2>{this.props.entry.title}</h2>
-                <h3>{this.props.entry.date}</h3>
+                <h2 >{this.props.entry.title}</h2>
+                <h3 style = {{fontSize : 20, padding : 10}}>{this.props.entry.date}</h3>
             </div>   
             <hr />
-            <p>{this.props.entry.text}</p>
-            <button name = "edit" onClick = {this.buttonClicked}>edit</button>
-            <button name = "delete" onClick = {this.buttonClicked}>delete</button>
+            { this.state.isShown &&
+                <p style = {textStyle}>{this.props.entry.text}</p>
+            }
+
+            <div>
+                <button style = {button} name = "edit" onClick = {this.buttonClicked}>edit</button>
+                <button style = {button} name = "delete" onClick = {this.buttonClicked}>delete</button>
+            </div>
+            
         </div>
     )
     } 

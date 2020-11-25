@@ -6,10 +6,19 @@ const ChangeTheme = () => {
         console.log('cycle theme')
     }
 
+    const button = {
+        borderColor : "transparent",
+        backgroundColor : "white",
+        borderRadius : 20,
+        margin : 5,
+        paddingRight: 10,
+        paddingLeft: 10
+    }
+
+    
+
     return (
-            <button onClick = {() => cycleTheme()}>
-                Change Theme
-            </button>
+            <div></div>
     )
 }
 

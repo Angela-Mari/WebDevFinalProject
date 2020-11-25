@@ -5,8 +5,8 @@ function SocialMedia(){
     const shareBttns = {
         display : "flex",
         felxDirection: "row",
-        backgroundColor: "yellow",
-        padding : 20
+        //backgroundColor: "yellow",
+        //padding : 20
     }
     return(
         <div style = {shareBttns}>

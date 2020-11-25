@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import LogoutButton from './LogoutButton.js';
-import ChangeTheme from './ChangeTheme.js';
 import DiaryCards from './DiaryCards.js';
 import NewEntry from './NewEntry';
 import QuoteContainer from './QuoteContainer'
@@ -15,14 +14,24 @@ function Hub() {
         flexDirection: "row",
         alignItems : "flex-start"
     }
+
     const sidebar = {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        backgroundColor: "green"
+        //backgroundColor: "green"
 
         
     }
+    const displayEntries = {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        //backgroundColor: "pink"
+
+    }
+    
+    
 
     const entryArray = [
         {
@@ -41,7 +50,14 @@ function Hub() {
         text: 'bruh does this even count?'
       }];
 
-
+      const button = {
+        borderColor : "transparent",
+        backgroundColor : "white",
+        borderRadius : 20,
+        margin : 5,
+        paddingRight: 10,
+        paddingLeft: 10
+    }
 
     const [displayArray, setArray] = React.useState(entryArray);
     const [searchArray, setSearch] = React.useState([])
@@ -107,27 +123,42 @@ function Hub() {
         }
     }
 
+    const [pink, setHeader] = React.useState({backgroundColor: "pink"})
+    const [darkPink, setSidebar] = React.useState({backgroundColor: "palevioletred"})
+    const [themeIndex, setIndex] = React.useState(1)
+    function cycleTheme(){
+        let headerColors = ["pink", "CornflowerBlue", "DarkSeaGreen"]
+        let sideColors = ["palevioletred", "aliceBlue", "SeaGreen"]
+        setHeader({backgroundColor : headerColors[themeIndex]})
+        setSidebar({backgroundColor : sideColors[themeIndex]})
+        setIndex((themeIndex + 1)%3)
+    }
+
     return (
         isAuthenticated && (
             <div>
-                <div className = "header">
+                <div className = "header" style = {pink}>
                     <h1>Daily Diary Hub</h1>
                     <QuoteContainer />
                     <div className = "navBttns">
-                        
                         <img src = {user.picture} alt = {user.name} className = "profilePic"/>
                         <LogoutButton />
-                        <ChangeTheme />
+                        <button style = {button} onClick = {cycleTheme}>
+                            Change Theme
+                        </button>
                     </div>
                 </div>
                 <div style = {mainContent}>
                     
-                    <div style = {sidebar}>  
+                    <div style = {sidebar, darkPink} className = "side-bar">  
                         <NewEntry title = {newTitle} date = {newDate} text = {newText} submitHandler = {submitHandler} updateValue = {updateValue}/>
                         <SocialMedia />
+                    </div >
+                    <div style = {displayEntries}>
+                        <SearchBar searchHandler = {searchHandler} value = ""/>
+                        <DiaryCards entries = {searchArray.length > 0  ? searchArray : displayArray} changeHandler = {changeHandler} />
                     </div>
-                    <SearchBar searchHandler = {searchHandler} value = ""/>
-                    <DiaryCards entries = {searchArray.length > 0  ? searchArray : displayArray} changeHandler = {changeHandler} />
+                    
                 </div>
                 {/*JSON.stringify(user, null, 2)} */}
             </div>

@@ -1,5 +1,14 @@
 import React from 'react';
 
+const button = {
+    borderColor : "transparent",
+    backgroundColor : "white",
+    borderRadius : 20,
+    margin : 5,
+    paddingRight: 10,
+    paddingLeft: 10
+}
+
 class NewEntry extends React.Component {
     constructor (props) {
         super()
@@ -34,26 +43,28 @@ class NewEntry extends React.Component {
         const NewEntryContainer = {
             display: "flex",
             flexDirection: "column",
-            padding : 20,
+            paddingTop : 20,
+            paddingLeft : 20,
+            paddingRight : 20
         }
 
         return (
             <form style = {NewEntryContainer}>
                 <h2>Write Entry</h2>
-                <hr />
+                
                 <p>
                     <label for = "newTitle">Title:  </label>
-                    <input type="text" name= "title" value = {this.props.title} onChange = {this.handelChange} />
+                    <input style = {{borderColor : "transparent", borderRadius : 10}}type="text" name= "title" value = {this.props.title} onChange = {this.handelChange} />
                 </p>
                 
                 <p>
                     <label for = "newDate">Date: </label>
-                    <input type="date" name= "date" id="newDate" value = {this.props.date} onChange = {this.handelChange}/>
+                    <input style = {{borderColor : "transparent", borderRadius : 10}}type="date" name= "date" id="newDate" value = {this.props.date} onChange = {this.handelChange}/>
                 </p>
                 
                 <p> 
-                    <textarea name="text" rows="7" value = {this.props.text} onChange = {this.handelChange}/>
-                    <button onClick = {this.submiter}>Done</button>
+                    <textarea style = {{borderColor : "transparent", borderRadius : 10}}name="text" rows="7" value = {this.props.text} onChange = {this.handelChange}/>
+                    <button style = {button}onClick = {this.submiter}>Done</button>
                 </p>
                 
             </form>

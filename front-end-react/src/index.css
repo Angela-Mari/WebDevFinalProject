@@ -16,7 +16,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  background-color: salmon;
+  background-color:;
   padding-right: 20px;
   padding-left: 20px;
   padding-bottom: 20px;
@@ -36,36 +36,18 @@ body {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background-color: purple;
   padding-left: 20px;
 }
 
-.special {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: blue;
+.side-bar {
+  
+  padding-bottom: 20px;
 }
 
-.nav_btn{
-  background-color: pink;
-  margin: 10px;
-}
 
-.quote {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 20px;
-  max-width: 500px;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  padding-right: 20px;
-  padding-left: 20px;
-  background-color: purple;
-  border-radius: 20px;
-}
+
+
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

@@ -3,10 +3,26 @@ import React from 'react'
 const quotesInner = {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: 'yellow',
+    //backgroundColor: 'yellow',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20
+}
+
+const style = {
+    borderRadius : 50,
+    borderColor : "transparent",
+    margin : 5,
+    padding : 5
+}
+
+const button = {
+    borderColor : "transparent",
+    backgroundColor : "white",
+    borderRadius : 20,
+    margin : 5,
+    paddingRight: 10,
+    paddingLeft: 10
 }
 
 class QuoteForm extends React.Component{
@@ -35,9 +51,9 @@ class QuoteForm extends React.Component{
     render () {
         return (
             <div style = {quotesInner}>
-                <input name= "quote" onChange = {this.changeHandler} placeholder = "type new quote" />
-                <input name= "author" onChange = {this.changeHandler} placeholder = "type author" />
-                <button onClick = {this.submitHandler}> done </button>
+                <input style = {style} name= "quote" onChange = {this.changeHandler} placeholder = "type new quote" />
+                <input style = {style} name= "author" onChange = {this.changeHandler} placeholder = "type author" />
+                <button style = {button} onClick = {this.submitHandler}> done </button>
             </div>
         )}
 

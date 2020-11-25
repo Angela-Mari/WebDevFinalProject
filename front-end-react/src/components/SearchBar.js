@@ -7,10 +7,16 @@ function SearchBar(props){
         props.searchHandler(event.target.value);
     }
 
-    
+    const style = {
+        borderRadius : 50,
+        borderColor : "transparent",
+        backgroundColor : "powderBlue",
+        margin : 20,
+        padding : 5
+    }
     return (
         <div>
-            <input type = "text" placeholder = "search entry..." onChange = {changeHandler} id = "search-bar"/>
+            <input style = {style} type = "text" placeholder = "🔍 search entry..." onChange = {changeHandler} id = "search-bar"/>
         </div>
     )
 }

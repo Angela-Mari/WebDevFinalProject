@@ -4,14 +4,13 @@ import QuoteForm from './QuoteForm';
 const displayQuotes = {
     display: 'flex',
     flexDirection: 'row',
-    //backgroundColor: 'yellow',
     padding: 20
 }
 
 const quotesInner = {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: 'yellow',
+    //backgroundColor: 'yellow',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20
@@ -30,6 +29,25 @@ let myQuotes = [{
     author: 'noone',
   }
   ];
+
+  const button = {
+    borderColor : "transparent",
+    backgroundColor : "white",
+    borderRadius : 20,
+    margin : 5,
+    paddingRight: 10,
+    paddingLeft: 10
+}
+
+const moveButton = {
+    borderColor : "transparent",
+    height : 30,
+    backgroundColor : "white",
+    borderRadius : 20,
+    marginTop : 30,
+    paddingRight: 10,
+    paddingLeft: 10
+}
 
 class QuoteContainer extends React.Component{
     constructor(){
@@ -130,20 +148,21 @@ class QuoteContainer extends React.Component{
 
         return(
             <div style = {displayQuotes}>
-                <button onClick = {this.backupIndex}>back</button>
+                <button style = {moveButton }onClick = {this.backupIndex}>&lt;</button>
                 <div>
                     { this.state.showMyComponent && 
                     <div style = {quotesInner}>
                         <h3>{myQuotes[this.state.index].quote}</h3>
-                        <p>-{myQuotes[this.state.index].author}</p>
-                        <button onClick = {this.addQuote}>+</button>
-                        <button onClick = {this.minusQuote}>-</button>
+                        <p>- {myQuotes[this.state.index].author}</p>
+                        <p><button style = {button} onClick = {this.addQuote}>+</button>
+                        <button style = {button} onClick = {this.minusQuote}>-</button></p>
+                        
                     </div>
                     }
                     {!this.state.showMyComponent && <QuoteForm submitQuote = {this.submitQuote}/>}
                     
                 </div>
-                <button onClick = {this.forwardIndex}>forward</button>
+                <button style = {moveButton} onClick = {this.forwardIndex}>&gt;</button>
             </div>
         )
     }  
