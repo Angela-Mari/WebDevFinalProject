@@ -37,17 +37,17 @@ function Hub() {
         {
         title: 'Best Day Ever',
         date: '2010-07-22',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' 
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales luctus dictum. Etiam porta sodales fermentum. Aliquam faucibus elementum risus, eget condimentum dolor faucibus quis. Praesent at purus quam. Aenean ultricies neque a augue bibendum, sit amet vestibulum dolor pellentesque. Aenean facilisis ante at porta elementum. Vestibulum pellentesque sem id nunc facilisis, sed eleifend lorem lacinia. Vestibulum vitae tortor blandit, lacinia neque eget, blandit erat.' 
       },
       {
-        title: 'I met the love of my life',
-        date: '2010-05-14',
-        text: 'hah not really but Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a risus mi.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque a risus mi.'
+        title: 'Rainy Day Thoughts',
+        date: '2015-05-14',
+        text: "I'm baby hot chicken listicle migas, locavore quinoa man bun ramps cornhole. Forage flannel taxidermy irony mlkshk la croix put a bird on it vinyl tacos, cliche ramps +1 try-hard farm-to-table normcore. Raw denim hammock stumptown mumblecore vexillologist YOLO brooklyn irony raclette affogato celiac offal chambray. Shabby chic plaid pop-up pitchfork, artisan tattooed four dollar toast snackwave bitters try-hard squid. Irony farm-to-table slow-carb cold-pressed snackwave swag palo santo semiotics crucifix microdosing. Salvia prism hashtag readymade brunch godard jianbing tofu palo santo green juice pork belly bicycle rights. Dummy text? More like dummy thicc text, amirite?"
       },
       {
-        title: 'My third entry',
-        date: '2010-04-22',
-        text: 'bruh does this even count?'
+        title: 'Cool Idea',
+        date: '2020-04-22',
+        text: "Artisan microdosing hammock shoreditch, mustache knausgaard meditation celiac tattooed air plant umami helvetica bicycle rights gastropub intelligentsia. PBR&B health goth street art plaid unicorn, four dollar toast beard thundercats. Kale chips four loko shabby chic vexillologist. Organic you probably haven't heard of them jianbing celiac. Hell of literally irony taxidermy migas vape thundercats you probably haven't heard of them echo park distillery organic trust fund. Post-ironic synth snackwave, lomo quinoa artisan master cleanse chambray."
       }];
 
       const button = {

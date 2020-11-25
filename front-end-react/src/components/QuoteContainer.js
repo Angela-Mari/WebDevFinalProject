@@ -17,16 +17,16 @@ const quotesInner = {
 }
 
 let myQuotes = [{
-    quote: 'Turn the music up!',
-    author: 'me',
+    quote: 'You miss 100% of the shots you dont take. - Wayne Gretzy',
+    author: 'Michael Scott',
   },
   {
-    quote: 'Choose your music',
-    author: 'you',
+    quote: "Mr. Vice President, I'm speaking. I'm speaking.",
+    author: 'Kamala Harris',
   },
   {
-    quote: 'Unlimited, streaming, ad-free',
-    author: 'noone',
+    quote: 'Mom, I am a rich man.',
+    author: 'Cher',
   }
   ];
 
@@ -153,7 +153,7 @@ class QuoteContainer extends React.Component{
                     { this.state.showMyComponent && 
                     <div style = {quotesInner}>
                         <h3>{myQuotes[this.state.index].quote}</h3>
-                        <p>- {myQuotes[this.state.index].author}</p>
+                        <h4>- {myQuotes[this.state.index].author}</h4>
                         <p><button style = {button} onClick = {this.addQuote}>+</button>
                         <button style = {button} onClick = {this.minusQuote}>-</button></p>
                         
