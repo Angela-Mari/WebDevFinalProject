@@ -14,8 +14,7 @@ var app = express();
 var port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
-var ATLAS_URI = "mongodb+srv://amgbdUser:2dGwS5tPmQnapuAs@dailydiarycluster.5roau.mongodb.net/<dbname>?retryWrites=true&w=majority";
-var uri = process.ATLAS_URI;
+var uri = "mongodb+srv://amgbdUser:2dGwS5tPmQnapuAs@dailydiarycluster.5roau.mongodb.net/<dbname>?retryWrites=true&w=majority";
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true
