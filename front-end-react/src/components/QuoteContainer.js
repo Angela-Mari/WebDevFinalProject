@@ -79,6 +79,7 @@ class QuoteContainer extends React.Component{
                             }
                             return quote;    
                         }),
+                        length: response.data.length,
                         didMount: true
                     })
                 }
@@ -86,36 +87,40 @@ class QuoteContainer extends React.Component{
     }
 
     backupIndex(){
+        if (this.state.length === 1){
+            return;
+        }
         this.setState(prevState => {
             
             if (prevState.index -1 < 0){
                 return {
-                    index : prevState.length,
-                    length : prevState.length
+                    index : prevState.length-1
                 }
             }
             else {
                 return {
-                    index : prevState.index - 1,
-                    length : prevState.length
+                    index : prevState.index - 1
                 }
             } 
         })
     }
 
     forwardIndex(){
+
+        if (this.state.length === 1){
+            return;
+        }
+        
         this.setState(prevState => {
             
-            if (prevState.index +1 > prevState.length){
+            if (prevState.index + 1 === prevState.length){
                 return {
                     index : 0,
-                    length : prevState.length
                 }
             }
             else {
                 return {
                     index : prevState.index + 1,
-                    length : prevState.length
                 }
             } 
         })
@@ -125,8 +130,6 @@ class QuoteContainer extends React.Component{
         console.log("add quote")
         this.setState(prevState => {
             return {
-                index: myQuotes.length-1,
-                length : myQuotes.length-1,
                 showMyComponent : !prevState.showMyComponent
             }
         })
@@ -154,15 +157,19 @@ class QuoteContainer extends React.Component{
 
     submitQuote(newQuote){
         console.log(newQuote)
-        myQuotes.push(newQuote)
-        this.setState(prevState => {
-            return {
-                index: myQuotes.length-1,
-                length : myQuotes.length-1,
-                showMyComponent : !prevState.showMyComponent
-            } 
-        })
-        console.log(myQuotes)
+        //myQuotes.push(newQuote)
+        // axios.get('http://localhost:5000/quotes')
+        //     .then(response=> {
+        //         this.setState(prevState => {
+        //             return {
+        //                 index: 0,
+        //                 length : myQuotes.length-1,
+        //                 showMyComponent : !prevState.showMyComponent
+        //             } 
+        //         })
+        //     })
+        
+        //console.log(myQuotes)
 
         const dbQuote = {
             "username": this.props.id, //pass down username from auth0 later
