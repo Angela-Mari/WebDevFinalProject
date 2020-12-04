@@ -10,6 +10,10 @@ var userSchema = new Schema({
     unique: true,
     trim: true,
     minlength: 3
+  },
+  theme: {
+    type: Number,
+    required: true
   }
 }, {
   timestamps: true
