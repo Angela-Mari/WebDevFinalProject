@@ -14,11 +14,8 @@ function App() {
     )
 
   return (
-    <div>
-      
+    <div>   
       <LoginButton/>
-          
-        
       <Hub />
     </div>
   );
