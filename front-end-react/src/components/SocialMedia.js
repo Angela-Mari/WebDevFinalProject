@@ -6,7 +6,7 @@ function SocialMedia(){
         display : "flex",
         felxDirection: "row",
         //backgroundColor: "yellow",
-        //padding : 20
+        //0padding : 20
     }
     return(
         <div style = {shareBttns}>

@@ -137,31 +137,44 @@ function Hub() {
         axios.get('http://localhost:5000/users')
             .then(response=> {
                 if (response.data.length > 0){
-                    setProfile(response.data.filter(obj => obj.username !== user.sub))
-                }
-            });
-            
-            if (profile.length){
-                console.log("we got a profile")
-                setIndex(profile.theme)
-                //cycleTheme()
-                return
-            }
-            else{
-                console.log("no user found, adding a new one")
-                
-                let dbUser = {
-                    username: user.sub,
-                    theme: 0
+                    console.log("looking for user")
+                    console.log(response.data)
+                    let curUser = response.data.filter(function (i,n){
+                        return n.username === user.sub;
+                    });
+                    setProfile(curUser)
                 }
 
-                console.log(dbUser)
+
+                if (profile.length){
+                    console.log("we got a profile")
+                    setIndex(profile.theme)
+                    //cycleTheme()
+                    return
+                }
+                else {
+                    console.log("no user found, adding a new one")
+                
+                    const dbUser = {
+                        username: user.sub,
+                        theme: 0
+                    }
+                    addUser(dbUser)
+                }   
+
+
+            });
+    }  
+    
+    function addUser(dbUser) {
+            
+                console.log("adding user...")
                 axios.post('http://localhost:5000/users/add', dbUser)
                 .then((response) => {
                     console.log(response.data)
                     //useEffect()
                 });
-            }
+            
     }
         
         
@@ -172,6 +185,20 @@ function Hub() {
         setHeader({backgroundColor : headerColors[themeIndex]})
         setSidebar({backgroundColor : sideColors[themeIndex]})
         setIndex((themeIndex + 1)%3)
+
+        console.log(profile)
+        // var fullUser = []
+        // axios.get('http://localhost:5000/users')
+        //     .then(response=> {
+        //         if (response.data.length > 0){
+        //             fullUser = response.data.filter( function(obj) {
+        //                 if (obj.username != profile.username)
+        //                     return obj
+        //             }) 
+        //         }
+        //         console.log(fullUser)
+        // });
+        // axios.update('http://localhost:5000/users/update'+fullUser._id, fullUser)
     }
 
     return (
