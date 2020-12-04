@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import LogoutButton from './LogoutButton.js';
 import DiaryCards from './DiaryCards.js';
@@ -6,7 +6,9 @@ import NewEntry from './NewEntry';
 import QuoteContainer from './QuoteContainer'
 import SocialMedia from './SocialMedia.js';
 import SearchBar from './SearchBar'
-// store an array with quotes and append quotes as needed from newest
+import axios from 'axios';
+
+
 function Hub() {
     const { user, isAuthenticated } = useAuth0();
     const mainContent = {
@@ -19,20 +21,14 @@ function Hub() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        //backgroundColor: "green"
-
-        
     }
+
     const displayEntries = {
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start",
-        //backgroundColor: "pink"
-
+        alignItems: "flex-start"
     }
     
-    
-
     const entryArray = [
         {
         title: 'Best Day Ever',
@@ -123,9 +119,53 @@ function Hub() {
         }
     }
 
-    const [pink, setHeader] = React.useState({backgroundColor: "pink"})
-    const [darkPink, setSidebar] = React.useState({backgroundColor: "palevioletred"})
-    const [themeIndex, setIndex] = React.useState(1)
+    const [main, setHeader] = React.useState({backgroundColor: "pink"})
+    const [accent, setSidebar] = React.useState({backgroundColor: "palevioletred"})
+    const [themeIndex, setIndex] = React.useState(0)
+    const [profile, setProfile] = React.useState([])
+    //const [isRendered, setRendered] = React.useState(false)
+
+    useEffect(() => {
+        if (isAuthenticated){
+            loadProfile();
+        }
+    }, [isAuthenticated]);
+
+    function loadProfile() {
+        // Update the document title using the browser API
+    
+        axios.get('http://localhost:5000/users')
+            .then(response=> {
+                if (response.data.length > 0){
+                    setProfile(response.data.filter(obj => obj.username !== user.sub))
+                }
+            });
+            
+            if (profile.length){
+                console.log("we got a profile")
+                setIndex(profile.theme)
+                //cycleTheme()
+                return
+            }
+            else{
+                console.log("no user found, adding a new one")
+                
+                let dbUser = {
+                    username: user.sub,
+                    theme: 0
+                }
+
+                console.log(dbUser)
+                axios.post('http://localhost:5000/users/add', dbUser)
+                .then((response) => {
+                    console.log(response.data)
+                    //useEffect()
+                });
+            }
+    }
+        
+        
+
     function cycleTheme(){
         let headerColors = ["pink", "CornflowerBlue", "DarkSeaGreen"]
         let sideColors = ["palevioletred", "aliceBlue", "SeaGreen"]
@@ -137,8 +177,9 @@ function Hub() {
     return (
         isAuthenticated && (
             <div>
-                {/*this will be the unique id: {user.email}*/}
-                <div className = "header" style = {pink}>
+                {console.log("rendered")}
+                "this will be the unique id:" {JSON.stringify(user)}
+                <div className = "header" style = {main}>
                     <h1>Daily Diary Hub</h1>
                     <QuoteContainer id = {user.email}/>
                     <div className = "navBttns">
@@ -151,7 +192,7 @@ function Hub() {
                 </div>
                 <div style = {mainContent}>
                     
-                    <div style = {sidebar, darkPink} className = "side-bar">  
+                    <div style = {sidebar, accent} className = "side-bar">  
                         <NewEntry title = {newTitle} date = {newDate} text = {newText} submitHandler = {submitHandler} updateValue = {updateValue}/>
                         <SocialMedia />
                     </div >
