@@ -55,7 +55,9 @@ class QuoteContainer extends React.Component{
         super()
         this.state = {
             index: 0,
-            length: myQuotes.length -1,
+            length: 0,
+            quotes: [],
+            didMount: false,
             showMyComponent : true
         }
         this.backupIndex = this.backupIndex.bind(this)
@@ -65,7 +67,24 @@ class QuoteContainer extends React.Component{
         this.minusQuote = this.minusQuote.bind(this)
     }
 
-    
+    componentDidMount() {
+        axios.get('http://localhost:5000/quotes')
+            .then(response=> {
+                if (response.data.length > 0){
+                    this.setState({
+                        quotes: response.data.map( function(obj) {
+                            let quote = {
+                                text : obj.text,
+                                author: obj.author
+                            }
+                            return quote;    
+                        }),
+                        didMount: true
+                    })
+                }
+            })
+    }
+
     backupIndex(){
         this.setState(prevState => {
             
@@ -146,7 +165,7 @@ class QuoteContainer extends React.Component{
         console.log(myQuotes)
 
         const dbQuote = {
-            "username": "test12356", //pass down username from auth0 later
+            "username": this.props.id, //pass down username from auth0 later
             "text": String(newQuote.quote),
             "author": String(newQuote.author)
         }
@@ -157,15 +176,15 @@ class QuoteContainer extends React.Component{
 
     }
     render() {
-
+        console.log(this.state.quotes)
         return(
             <div style = {displayQuotes}>
                 <button style = {moveButton }onClick = {this.backupIndex}>&lt;</button>
                 <div>
                     { this.state.showMyComponent && 
                     <div style = {quotesInner}>
-                        <h3>{myQuotes[this.state.index].quote}</h3>
-                        <h4>- {myQuotes[this.state.index].author}</h4>
+                        <h3>{this.state.didMount && this.state.quotes[this.state.index].text}</h3>
+                        <h4>- {this.state.didMount && this.state.quotes[this.state.index].author}</h4>
                         <p><button style = {button} onClick = {this.addQuote}>+</button>
                         <button style = {button} onClick = {this.minusQuote}>-</button></p>
                         

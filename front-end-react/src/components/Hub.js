@@ -137,9 +137,10 @@ function Hub() {
     return (
         isAuthenticated && (
             <div>
+                {/*this will be the unique id: {user.email}*/}
                 <div className = "header" style = {pink}>
                     <h1>Daily Diary Hub</h1>
-                    <QuoteContainer />
+                    <QuoteContainer id = {user.email}/>
                     <div className = "navBttns">
                         <img src = {user.picture} alt = {user.name} className = "profilePic"/>
                         <LogoutButton />
@@ -160,7 +161,7 @@ function Hub() {
                     </div>
                     
                 </div>
-                {/*JSON.stringify(user, null, 2)} */}
+                
             </div>
         )
     )
