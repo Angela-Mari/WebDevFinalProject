@@ -1,6 +1,5 @@
 import React from 'react'
-import axios from 'axios'
-import QuoteDB from '../../backend/models/quote.model'
+
 
 const quotesInner = {
     display: 'flex',
@@ -48,10 +47,6 @@ class QuoteForm extends React.Component{
     submitHandler(){
         console.log("done")
         this.props.submitQuote(this.state)
-
-        //temp url!
-        axios.post('https://localhost:3000/quotes/add', QuoteDB)
-            .then(res => console.log(res.data));
     }
 
     render () {

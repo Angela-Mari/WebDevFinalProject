@@ -1,5 +1,6 @@
 import React from 'react';
 import QuoteForm from './QuoteForm';
+import axios from 'axios';
 
 const displayQuotes = {
     display: 'flex',
@@ -143,6 +144,17 @@ class QuoteContainer extends React.Component{
             } 
         })
         console.log(myQuotes)
+
+        const dbQuote = {
+            "username": "test12356", //pass down username from auth0 later
+            "text": String(newQuote.quote),
+            "author": String(newQuote.author)
+        }
+
+        //temp url!
+        axios.post('http://localhost:5000/quotes/add', dbQuote)
+            .then(res => console.log(res.data));
+
     }
     render() {
 
