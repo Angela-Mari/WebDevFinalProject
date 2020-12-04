@@ -11,25 +11,10 @@ const displayQuotes = {
 const quotesInner = {
     display: 'flex',
     flexDirection: 'column',
-    //backgroundColor: 'yellow',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20
 }
-
-let myQuotes = [{
-    quote: 'You miss 100% of the shots you dont take. - Wayne Gretzy',
-    author: 'Michael Scott',
-  },
-  {
-    quote: "Mr. Vice President, I'm speaking. I'm speaking.",
-    author: 'Kamala Harris',
-  },
-  {
-    quote: 'Mom, I am a rich man.',
-    author: 'Cher',
-  }
-  ];
 
   const button = {
     borderColor : "transparent",
@@ -68,7 +53,6 @@ class QuoteContainer extends React.Component{
     }
 
     componentDidMount() {
-        console.log("mounting...")
         axios.get('http://localhost:5000/quotes')
             .then(response=> {
                 if (response.data.length > 0){
@@ -129,7 +113,6 @@ class QuoteContainer extends React.Component{
     }
 
     addQuote(){
-        //console.log("add quote")
         this.setState(prevState => {
             return {
                 showMyComponent : !prevState.showMyComponent
@@ -159,7 +142,7 @@ class QuoteContainer extends React.Component{
         console.log(newQuote)
         
         const dbQuote = {
-            username: this.props.id, //pass down username from auth0 later
+            username: this.props.id, //pass down username from auth0
             text: newQuote.quote,
             author: newQuote.author
         }
@@ -167,19 +150,15 @@ class QuoteContainer extends React.Component{
         //temp url!
         axios.post('http://localhost:5000/quotes/add', dbQuote)
             .then((response) => {
-                
                 console.log(response.data)
 
-                //if(response.statusCode === 201){
+                this.setState(prevState => {
+                    return {
+                        showMyComponent : !prevState.showMyComponent
+                    } 
+                })
 
-                    this.setState(prevState => {
-                        return {
-                            showMyComponent : !prevState.showMyComponent
-                        } 
-                    })
-
-                    this.componentDidMount();  
-                //}    // Your function call
+                this.componentDidMount();  
             });
 
         
