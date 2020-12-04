@@ -68,12 +68,14 @@ class QuoteContainer extends React.Component{
     }
 
     componentDidMount() {
+        console.log("mounting...")
         axios.get('http://localhost:5000/quotes')
             .then(response=> {
                 if (response.data.length > 0){
                     this.setState({
                         quotes: response.data.map( function(obj) {
                             let quote = {
+                                id : obj._id,
                                 text : obj.text,
                                 author: obj.author
                             }
@@ -136,21 +138,32 @@ class QuoteContainer extends React.Component{
     }
 
     minusQuote(){
-        console.log("minus")
-        if (myQuotes.length === 1){
-            myQuotes[0].quote = ""
-            myQuotes[0].author = ""
-            this.setState({})
-            return
-        }
-        console.log(this.state.index)
-        myQuotes.splice(this.state.index, this.state.index+1)
-        console.log(myQuotes)
+        // console.log("minus")
+        // if (myQuotes.length === 1){
+        //     myQuotes[0].quote = ""
+        //     myQuotes[0].author = ""
+        //     this.setState({})
+        //     return
+        // }
+        // console.log(this.state.index)
+        // myQuotes.splice(this.state.index, this.state.index+1)
+        // console.log(myQuotes)
+        // this.setState(prevState => {
+        //     return {
+        //         index: 0,
+        //         length : myQuotes.length-1,
+        //         showMyComponent : prevState.showMyComponent
+        //     }
+        // })
+        let id = this.state.quotes[this.state.index].id;
+        axios.delete('http://localhost:5000/quotes/' + id)
+            .then(res => console.log(res.data));
+        
         this.setState(prevState => {
-            return {
-                index: 0,
-                length : myQuotes.length-1,
-                showMyComponent : prevState.showMyComponent
+            return{
+                quotes: prevState.quotes.filter(quote => quote.id !== id),
+                length: prevState.length -1,
+                index: 0
             }
         })
     }
@@ -172,14 +185,22 @@ class QuoteContainer extends React.Component{
         //console.log(myQuotes)
 
         const dbQuote = {
-            "username": this.props.id, //pass down username from auth0 later
-            "text": String(newQuote.quote),
-            "author": String(newQuote.author)
+            username: this.props.id, //pass down username from auth0 later
+            text: newQuote.quote,
+            author: newQuote.author
         }
 
         //temp url!
         axios.post('http://localhost:5000/quotes/add', dbQuote)
-            .then(res => console.log(res.data));
+            .then(this.componentDidMount());
+
+        this.setState(prevState => {
+            return {
+                showMyComponent : !prevState.showMyComponent
+            } 
+        })
+
+        
 
     }
     render() {
@@ -190,8 +211,8 @@ class QuoteContainer extends React.Component{
                 <div>
                     { this.state.showMyComponent && 
                     <div style = {quotesInner}>
-                        <h3>{this.state.didMount && this.state.quotes[this.state.index].text}</h3>
-                        <h4>- {this.state.didMount && this.state.quotes[this.state.index].author}</h4>
+                        <h3>{(this.state.didMount && this.state.length > 0) && this.state.quotes[this.state.index].text} {this.state.length === 0 && "add new quote"}</h3>
+                        <h4>- {(this.state.didMount && this.state.length >0) && this.state.quotes[this.state.index].author} {this.state.length === 0 && "by author"}</h4>
                         <p><button style = {button} onClick = {this.addQuote}>+</button>
                         <button style = {button} onClick = {this.minusQuote}>-</button></p>
                         
