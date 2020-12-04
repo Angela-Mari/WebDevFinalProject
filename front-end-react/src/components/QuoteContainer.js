@@ -129,7 +129,7 @@ class QuoteContainer extends React.Component{
     }
 
     addQuote(){
-        console.log("add quote")
+        //console.log("add quote")
         this.setState(prevState => {
             return {
                 showMyComponent : !prevState.showMyComponent
@@ -138,23 +138,10 @@ class QuoteContainer extends React.Component{
     }
 
     minusQuote(){
-        // console.log("minus")
-        // if (myQuotes.length === 1){
-        //     myQuotes[0].quote = ""
-        //     myQuotes[0].author = ""
-        //     this.setState({})
-        //     return
-        // }
-        // console.log(this.state.index)
-        // myQuotes.splice(this.state.index, this.state.index+1)
-        // console.log(myQuotes)
-        // this.setState(prevState => {
-        //     return {
-        //         index: 0,
-        //         length : myQuotes.length-1,
-        //         showMyComponent : prevState.showMyComponent
-        //     }
-        // })
+
+        if (this.state.length === 0){
+            return
+        }
         let id = this.state.quotes[this.state.index].id;
         axios.delete('http://localhost:5000/quotes/' + id)
             .then(res => console.log(res.data));
@@ -170,20 +157,7 @@ class QuoteContainer extends React.Component{
 
     submitQuote(newQuote){
         console.log(newQuote)
-        //myQuotes.push(newQuote)
-        // axios.get('http://localhost:5000/quotes')
-        //     .then(response=> {
-        //         this.setState(prevState => {
-        //             return {
-        //                 index: 0,
-        //                 length : myQuotes.length-1,
-        //                 showMyComponent : !prevState.showMyComponent
-        //             } 
-        //         })
-        //     })
         
-        //console.log(myQuotes)
-
         const dbQuote = {
             username: this.props.id, //pass down username from auth0 later
             text: newQuote.quote,
@@ -192,19 +166,27 @@ class QuoteContainer extends React.Component{
 
         //temp url!
         axios.post('http://localhost:5000/quotes/add', dbQuote)
-            .then(this.componentDidMount());
+            .then((response) => {
+                
+                console.log(response.data)
 
-        this.setState(prevState => {
-            return {
-                showMyComponent : !prevState.showMyComponent
-            } 
-        })
+                //if(response.statusCode === 201){
+
+                    this.setState(prevState => {
+                        return {
+                            showMyComponent : !prevState.showMyComponent
+                        } 
+                    })
+
+                    this.componentDidMount();  
+                //}    // Your function call
+            });
 
         
-
     }
+
     render() {
-        console.log(this.state.quotes)
+        
         return(
             <div style = {displayQuotes}>
                 <button style = {moveButton }onClick = {this.backupIndex}>&lt;</button>
