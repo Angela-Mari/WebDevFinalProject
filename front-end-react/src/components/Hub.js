@@ -119,45 +119,46 @@ function Hub() {
         }
     }
 
-    const [main, setHeader] = React.useState({backgroundColor: "pink"})
-    const [accent, setSidebar] = React.useState({backgroundColor: "palevioletred"})
-    const [themeIndex, setIndex] = React.useState(0)
+    const [main, setHeader] = React.useState()
+    const [accent, setSidebar] = React.useState()
     const [profile, setProfile] = React.useState([])
-    //const [isRendered, setRendered] = React.useState(false)
+    const [isLoaded, loaded] = React.useState(false)
+    let headerColors = ["pink", "CornflowerBlue", "DarkSeaGreen"]
+    let sideColors = ["palevioletred", "aliceBlue", "SeaGreen"]
 
-    useEffect(() => {
-        if (isAuthenticated){
-            loadProfile();
-        }
-    }, [isAuthenticated]);
+    // useEffect(() => {
+    //     console.log("use effect")
+    //     if (isAuthenticated){
+    //         loadProfile();
+    //     }
+    // }, [isAuthenticated]);
 
     function loadProfile() {
-        // Update the document title using the browser API
-    
+       
         axios.get('http://localhost:5000/users')
             .then(response=> {
                 if (response.data.length > 0){
                     console.log("looking for user")
                     console.log(response.data)
-                    let curUser = response.data.filter(function (i,n){
-                        return n.username === user.sub;
+                    let curUser = response.data.filter(function (obj){
+                        //console.log(obj.username)
+                        //console.log(user.sub)
+                        return obj.username === user.sub;
                     });
-                    setProfile(curUser)
-                }
 
-
-                if (profile.length){
-                    console.log("we got a profile")
-                    setIndex(profile.theme)
-                    //cycleTheme()
+                    setProfile(curUser[0])
+                    setHeader({backgroundColor : headerColors[profile.theme]})
+                    setSidebar({backgroundColor : sideColors[profile.theme]})
+                    loaded(true)
                     return
                 }
+
                 else {
                     console.log("no user found, adding a new one")
                 
                     const dbUser = {
                         username: user.sub,
-                        theme: 0
+                        theme: 1
                     }
                     addUser(dbUser)
                 }   
@@ -168,44 +169,48 @@ function Hub() {
     
     function addUser(dbUser) {
             
-                console.log("adding user...")
-                axios.post('http://localhost:5000/users/add', dbUser)
-                .then((response) => {
-                    console.log(response.data)
-                    //useEffect()
-                });
-            
+        console.log("adding user...")
+        axios.post('http://localhost:5000/users/add', dbUser)
+        .then((response) => {
+            console.log(response.data)
+        });
+
+        setProfile(dbUser)
+        loaded(true)
     }
         
         
 
     function cycleTheme(){
-        let headerColors = ["pink", "CornflowerBlue", "DarkSeaGreen"]
-        let sideColors = ["palevioletred", "aliceBlue", "SeaGreen"]
-        setHeader({backgroundColor : headerColors[themeIndex]})
-        setSidebar({backgroundColor : sideColors[themeIndex]})
-        setIndex((themeIndex + 1)%3)
+        setHeader({backgroundColor : headerColors[profile.theme]})
+        setSidebar({backgroundColor : sideColors[profile.theme]})
+        setProfile({
+            _id: profile._id,
+            username: profile.username,
+            theme: (profile.theme + 1)%3
+          });
 
         console.log(profile)
-        // var fullUser = []
-        // axios.get('http://localhost:5000/users')
-        //     .then(response=> {
-        //         if (response.data.length > 0){
-        //             fullUser = response.data.filter( function(obj) {
-        //                 if (obj.username != profile.username)
-        //                     return obj
-        //             }) 
-        //         }
-        //         console.log(fullUser)
-        // });
-        // axios.update('http://localhost:5000/users/update'+fullUser._id, fullUser)
+        let updateDB = {
+            username: profile.username,
+            theme: profile.theme
+        }
+
+        axios.post('http://localhost:5000/users/update/' + profile._id, updateDB)
+      .then(res => console.log(res.data));
     }
 
+    useEffect(()=>{
+        console.log("use effect")
+        if (isAuthenticated){
+        loadProfile()
+        }
+    }, [isAuthenticated, isLoaded]) 
+    
     return (
         isAuthenticated && (
             <div>
-                {console.log("rendered")}
-                "this will be the unique id:" {JSON.stringify(user)}
+                    
                 <div className = "header" style = {main}>
                     <h1>Daily Diary Hub</h1>
                     <QuoteContainer id = {user.email}/>
