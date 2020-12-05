@@ -182,13 +182,22 @@ function Hub() {
         
 
     function cycleTheme(){
-        setHeader({backgroundColor : headerColors[profile.theme]})
-        setSidebar({backgroundColor : sideColors[profile.theme]})
+        console.log(profile.theme)
+        var newIndex = profile.theme+1;
+        if (newIndex > 2){
+            newIndex = 0
+        }
+
         setProfile({
             _id: profile._id,
             username: profile.username,
-            theme: (profile.theme + 1)%3
+            theme: newIndex
           });
+
+        console.log(profile.theme)
+        setHeader({backgroundColor : headerColors[newIndex]})
+        setSidebar({backgroundColor : sideColors[newIndex]})
+        
 
         console.log(profile)
         let updateDB = {
