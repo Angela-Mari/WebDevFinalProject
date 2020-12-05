@@ -202,7 +202,7 @@ function Hub() {
         console.log(profile)
         let updateDB = {
             username: profile.username,
-            theme: profile.theme
+            theme: newIndex
         }
 
         axios.post('http://localhost:5000/users/update/' + profile._id, updateDB)
