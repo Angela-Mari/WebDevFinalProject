@@ -28,23 +28,6 @@ function Hub() {
         flexDirection: "column",
         alignItems: "flex-start"
     }
-    
-    const entryArray = [
-        {
-        title: 'Best Day Ever',
-        date: '2010-07-22',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec sodales luctus dictum. Etiam porta sodales fermentum. Aliquam faucibus elementum risus, eget condimentum dolor faucibus quis. Praesent at purus quam. Aenean ultricies neque a augue bibendum, sit amet vestibulum dolor pellentesque. Aenean facilisis ante at porta elementum. Vestibulum pellentesque sem id nunc facilisis, sed eleifend lorem lacinia. Vestibulum vitae tortor blandit, lacinia neque eget, blandit erat.' 
-      },
-      {
-        title: 'Rainy Day Thoughts',
-        date: '2015-05-14',
-        text: "I'm baby hot chicken listicle migas, locavore quinoa man bun ramps cornhole. Forage flannel taxidermy irony mlkshk la croix put a bird on it vinyl tacos, cliche ramps +1 try-hard farm-to-table normcore. Raw denim hammock stumptown mumblecore vexillologist YOLO brooklyn irony raclette affogato celiac offal chambray. Shabby chic plaid pop-up pitchfork, artisan tattooed four dollar toast snackwave bitters try-hard squid. Irony farm-to-table slow-carb cold-pressed snackwave swag palo santo semiotics crucifix microdosing. Salvia prism hashtag readymade brunch godard jianbing tofu palo santo green juice pork belly bicycle rights. Dummy text? More like dummy thicc text, amirite?"
-      },
-      {
-        title: 'Cool Idea',
-        date: '2020-04-22',
-        text: "Artisan microdosing hammock shoreditch, mustache knausgaard meditation celiac tattooed air plant umami helvetica bicycle rights gastropub intelligentsia. PBR&B health goth street art plaid unicorn, four dollar toast beard thundercats. Kale chips four loko shabby chic vexillologist. Organic you probably haven't heard of them jianbing celiac. Hell of literally irony taxidermy migas vape thundercats you probably haven't heard of them echo park distillery organic trust fund. Post-ironic synth snackwave, lomo quinoa artisan master cleanse chambray."
-      }];
 
       const button = {
         borderColor : "transparent",
@@ -55,7 +38,7 @@ function Hub() {
         paddingLeft: 10
     }
 
-    const [displayArray, setArray] = React.useState(entryArray);
+    const [displayArray, setArray] = React.useState([]);
     const [searchArray, setSearch] = React.useState([])
     const [newTitle, setTitle] = React.useState("");
     const [newDate, setDate] = React.useState("");
@@ -123,15 +106,9 @@ function Hub() {
     const [accent, setSidebar] = React.useState()
     const [profile, setProfile] = React.useState([])
     const [isLoaded, loaded] = React.useState(false)
+
     let headerColors = ["pink", "CornflowerBlue", "DarkSeaGreen"]
     let sideColors = ["palevioletred", "aliceBlue", "SeaGreen"]
-
-    // useEffect(() => {
-    //     console.log("use effect")
-    //     if (isAuthenticated){
-    //         loadProfile();
-    //     }
-    // }, [isAuthenticated]);
 
     function loadProfile() {
        
@@ -150,9 +127,8 @@ function Hub() {
                     setHeader({backgroundColor : headerColors[profile.theme]})
                     setSidebar({backgroundColor : sideColors[profile.theme]})
                     loaded(true)
-                    return
+                    //return
                 }
-
                 else {
                     console.log("no user found, adding a new one")
                 
@@ -162,9 +138,27 @@ function Hub() {
                     }
                     addUser(dbUser)
                 }   
-
-
             });
+        
+        axios.get('http://localhost:5000/entries')
+            .then(response=> {
+                if (response.data.length > 0){
+                        let entries = response.data.filter( function(obj) {
+                            if (obj.username == user.sub){
+                                let entry = {
+                                    id : obj._id,
+                                    username : obj.username,
+                                    title : obj.title,
+                                    text: obj.text,
+                                    date: obj.date
+                                }
+                                return entry;
+                            }
+                    })
+                    setArray(entries)    
+                }
+            })
+
     }  
     
     function addUser(dbUser) {
@@ -177,9 +171,7 @@ function Hub() {
 
         setProfile(dbUser)
         loaded(true)
-    }
-        
-        
+    } 
 
     function cycleTheme(){
         console.log(profile.theme)
@@ -222,7 +214,7 @@ function Hub() {
                     
                 <div className = "header" style = {main}>
                     <h1>Daily Diary Hub</h1>
-                    <QuoteContainer id = {user.email}/>
+                    <QuoteContainer id = {user.sub}/>
                     <div className = "navBttns">
                         <img src = {user.picture} alt = {user.name} className = "profilePic"/>
                         <LogoutButton />
