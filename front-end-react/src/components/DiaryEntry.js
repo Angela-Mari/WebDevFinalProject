@@ -4,9 +4,9 @@ import React from 'react'
 
 class DiaryEntry extends React.Component {
     constructor(props) {
+        //console.log(props)
         super()
         this.state = {
-            entryIndex : props.entryIndex,
             edit : false,
             delete : false,
             isShown : false
@@ -16,15 +16,17 @@ class DiaryEntry extends React.Component {
     
     buttonClicked(event){
         if (event.target.name === "edit"){
+            console.log(this.props.entry)
             this.props.changeHandler(
-                {entryIndex: this.props.entryIndex,
+                {entry: this.props.entry,
                     change: "edit"
             })
 
         }
         else{
             this.props.changeHandler(
-                {entryIndex: this.props.entryIndex,
+                {entry: this.props.entry,
+                    id: this.props.id,
                     change: "delete"
             })
         }  
@@ -56,8 +58,9 @@ class DiaryEntry extends React.Component {
 
     return (
         <div 
-        onMouseEnter={() => this.setState({isShown : true})}
-        onMouseLeave={() => this.setState({isShown : false})} 
+        onClick={() => this.setState(
+            prevState => {return {isShown : !prevState.isShown}}
+            )}
         style = {{backgroundColor : "powderblue", margin : 10, padding :10, borderRadius : 20}}
         >
             

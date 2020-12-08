@@ -21,7 +21,7 @@ class DiaryCards extends React.Component {
         const entriesArray = this.props.entries.map((item, curIndex = 0) => {
         
         ++curIndex
-        return (<DiaryEntry edit = {false} delete = {false} entry = {item} key = {item.id} changeHandler = {this.props.changeHandler}/>)
+        return (<DiaryEntry edit = {false} delete = {false} entry = {item} id = {item._id} key = {item._id} changeHandler = {this.props.changeHandler}/>)
         });
         
 

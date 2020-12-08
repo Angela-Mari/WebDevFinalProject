@@ -43,15 +43,34 @@ function Hub() {
     const [newTitle, setTitle] = React.useState("");
     const [newDate, setDate] = React.useState("");
     const [newText, setText] = React.useState("");
+    //const [edit, setEdit] = React.useState(false);
 
     function submitHandler(myNewEntry) {   
-        setArray([...displayArray, myNewEntry])
-        setTitle("")
-        setDate("")
-        setText("")
+        const dbEntry = {
+            username: user.sub, //pass down username from auth0
+            title: myNewEntry.title,
+            text: myNewEntry.text,
+            date: myNewEntry.date
+        }
+
+        console.log(myNewEntry)
+        //temp url!
+        axios.post('http://localhost:5000/entries/add', dbEntry)
+            .then((response) => {
+                console.log(response.data)
+                setArray([...displayArray, myNewEntry])
+                setTitle("")
+                setDate("")
+                setText("")
+            })
+            .catch((error) => {
+                alert("You must enter a title, data, and text before you can submit a new entry.")
+            })
     }
 
     function changeHandler(editObject){
+        // console.log("change handler")
+        // console.log(editObject)
         if (editObject.change === "delete"){
             deleteEntry(editObject)
         }
@@ -62,11 +81,20 @@ function Hub() {
     }
 
     function deleteEntry(editObject) {
-       setArray(displayArray => displayArray.filter((item , i) => { 
-           if (i !== editObject.entryIndex-1)
-            return item })
-            )
-    }
+        console.log("deleting...")
+        console.log(editObject)
+        console.log(editObject.entry)
+        let id = editObject.entry._id;
+        console.log(id)
+        axios.delete('http://localhost:5000/entries/' + id)
+            .then(res => console.log(res.data));
+        
+            setArray(displayArray => displayArray.filter((item , i) => { 
+                       if (item._id !== editObject.entry._id)
+                        return item 
+                    }))
+
+    }   
 
     function editEntry(editObject) {
         let editThisEntry = displayArray[editObject.entryIndex-1];
@@ -95,6 +123,7 @@ function Hub() {
                 {
                  return item 
                 }
+                else return
             }))
         }
         else {
@@ -112,6 +141,7 @@ function Hub() {
 
     function loadProfile() {
        
+        //set theme from db
         axios.get('http://localhost:5000/users')
             .then(response=> {
                 if (response.data.length > 0){
@@ -140,11 +170,12 @@ function Hub() {
                 }   
             });
         
+        // get entires from db
         axios.get('http://localhost:5000/entries')
             .then(response=> {
                 if (response.data.length > 0){
                         let entries = response.data.filter( function(obj) {
-                            if (obj.username == user.sub){
+                            if (obj.username === user.sub){
                                 let entry = {
                                     id : obj._id,
                                     username : obj.username,
@@ -154,6 +185,7 @@ function Hub() {
                                 }
                                 return entry;
                             }
+                            else return
                     })
                     setArray(entries)    
                 }
