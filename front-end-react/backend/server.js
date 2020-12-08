@@ -24,9 +24,11 @@ connection.once('open', ()=> {
 
 const quotesRouter = require('./routes/quotes');
 const usersRouter = require('./routes/users');
+const entriesRouter = require('./routes/entries');
 
 app.use('/quotes', quotesRouter);
-app.use('/users', usersRouter)
+app.use('/users', usersRouter);
+app.use('/entries', entriesRouter);
 
 //start the server
 app.listen(port, ()=>{

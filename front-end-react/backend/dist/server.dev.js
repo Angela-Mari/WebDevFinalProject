@@ -30,8 +30,11 @@ var quotesRouter = require('./routes/quotes');
 
 var usersRouter = require('./routes/users');
 
+var entriesRouter = require('./routes/entries');
+
 app.use('/quotes', quotesRouter);
-app.use('/users', usersRouter); //start the server
+app.use('/users', usersRouter);
+app.use('/entries', entriesRouter); //start the server
 
 app.listen(port, function () {
   console.log("server is running on port: ".concat(port));
