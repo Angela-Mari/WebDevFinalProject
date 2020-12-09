@@ -15,7 +15,7 @@ var port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json()); //not good coding practice probs
 
-var uri = "mongodb+srv://amgbdUser:2dGwS5tPmQnapuAs@dailydiarycluster.5roau.mongodb.net/<dbname>?retryWrites=true&w=majority";
+var uri = process.env.REACT_APP_ATLAS_URI;
 mongoose.connect(uri, {
   useUnifiedTopology: true,
   useNewUrlParser: true,

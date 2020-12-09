@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 //not good coding practice probs
-const uri = "mongodb+srv://amgbdUser:2dGwS5tPmQnapuAs@dailydiarycluster.5roau.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const uri = process.env.REACT_APP_ATLAS_URI;
 mongoose.connect(uri, {useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true } 
     );
 const connection = mongoose.connection;
