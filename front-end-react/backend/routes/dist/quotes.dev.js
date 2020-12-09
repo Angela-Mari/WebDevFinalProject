@@ -4,6 +4,8 @@ var router = require('express').Router();
 
 var Quote = require('../models/quote.model');
 
+var sanitize = require("mongo-sanitize");
+
 router.route('/').get(function (req, res) {
   Quote.find().then(function (quotes) {
     return res.json(quotes);
@@ -12,9 +14,9 @@ router.route('/').get(function (req, res) {
   });
 });
 router.route('/add').post(function (req, res) {
-  var username = req.body.username;
-  var text = req.body.text;
-  var author = req.body.author; //const duration = Number(req.body.duration);
+  var username = sanitize(req.body.username);
+  var text = sanitize(req.body.text);
+  var author = sanitize(req.body.author); //const duration = Number(req.body.duration);
   //const date = Date.parse(req.body.date);
 
   var newQuote = new Quote({
@@ -46,9 +48,9 @@ router.route('/:id')["delete"](function (req, res) {
 });
 router.route('/update/:id').post(function (req, res) {
   Quote.findById(req.params.id).then(function (quote) {
-    quote.username = req.body.username;
-    quote.text = req.body.text;
-    quote.author = req.body.author; //   exercise.duration = Number(req.body.duration);
+    quote.username = sanitize(req.body.username);
+    quote.text = sanitize(req.body.text);
+    quote.author = sanitize(req.body.author); //   exercise.duration = Number(req.body.duration);
     //   exercise.date = Date.parse(req.body.date);
 
     quote.save().then(function () {

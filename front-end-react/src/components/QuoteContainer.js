@@ -16,6 +16,28 @@ const quotesInner = {
     padding: 20
 }
 
+const buttonP = {
+    border: 2,
+    borderStyle: "solid",
+    borderLeftColor : "white",
+    borderTopColor : "white",
+    borderRightColor: "white",
+    borderBottomColor: "white",
+    backgroundColor : "transparent",
+    borderRadius : "0px 20px 20px 0px",
+    marginRight : 5,
+    paddingRight: 10,
+    paddingLeft: 10
+}
+
+const buttonM = {
+    borderColor : "transparent",
+    backgroundColor : "white",
+    borderRadius : "20px 0px 00px 20px",
+    marginLeft : 5,
+    paddingRight: 10,
+    paddingLeft: 10
+}
   const button = {
     borderColor : "transparent",
     backgroundColor : "white",
@@ -36,9 +58,10 @@ const moveButton = {
 }
 
 class QuoteContainer extends React.Component{
-    constructor(){
+    constructor () {
         super()
         this.state = {
+            
             index: 0,
             length: 0,
             quotes: [],
@@ -53,20 +76,24 @@ class QuoteContainer extends React.Component{
     }
 
     componentDidMount() {
+
+        let id = this.props.id
+        console.log(id)
         axios.get('http://localhost:5000/quotes')
             .then(response=> {
                 if (response.data.length > 0){
+                    var temp = 0
                     this.setState({
-                        quotes: response.data.map( function(obj) {
-                            let quote = {
-                                id : obj._id,
-                                text : obj.text,
-                                author: obj.author
-                            }
-                            return quote;    
+                        quotes: response.data.filter( function(obj) {
+                             if (obj.username === id){
+                                 temp++;
+                                return obj
+                             }
+                             else return   
                         }),
-                        length: response.data.length,
-                        didMount: true
+                        length: temp,
+                        didMount: true,
+                        index: 0
                     })
                 }
             })
@@ -125,17 +152,25 @@ class QuoteContainer extends React.Component{
         if (this.state.length === 0){
             return
         }
-        let id = this.state.quotes[this.state.index].id;
+        console.log(this.state.quotes)
+        console.log(this.state.index)
+        let id = this.state.quotes[this.state.index]._id;
+        console.log(id)
         axios.delete('http://localhost:5000/quotes/' + id)
-            .then(res => console.log(res.data));
+            .then(res => {
+            console.log(res.data)
+            this.setState({didMount: false})
+            // this.setState(prevState => {
+            //     return{
+            //         quotes: prevState.quotes.filter(quote => quote.id !== id),
+            //         length: prevState.length -1,
+            //         index: 0
+            //     }
+            // })
+            this.componentDidMount()
+        });
         
-        this.setState(prevState => {
-            return{
-                quotes: prevState.quotes.filter(quote => quote.id !== id),
-                length: prevState.length -1,
-                index: 0
-            }
-        })
+        
     }
 
     submitQuote(newQuote){
@@ -159,7 +194,10 @@ class QuoteContainer extends React.Component{
                 })
 
                 this.componentDidMount();  
-            });
+            })
+            .catch(error => {
+                alert("you must type a valid quote and author")
+            })
 
         
     }
@@ -174,8 +212,10 @@ class QuoteContainer extends React.Component{
                     <div style = {quotesInner}>
                         <h3>{(this.state.didMount && this.state.length > 0) && this.state.quotes[this.state.index].text} {this.state.length === 0 && "add new quote"}</h3>
                         <h4>- {(this.state.didMount && this.state.length >0) && this.state.quotes[this.state.index].author} {this.state.length === 0 && "by author"}</h4>
-                        <p><button style = {button} onClick = {this.addQuote}>+</button>
-                        <button style = {button} onClick = {this.minusQuote}>-</button></p>
+                        <p>
+                        <button style = {buttonM} onClick = {this.minusQuote}>-</button>
+                        <button style = {buttonP} onClick = {this.addQuote}>+</button>
+                        </p>
                         
                     </div>
                     }

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let Entry = require('../models/entry.model');
+const sanitize = require("mongo-sanitize");
 
 router.route('/').get((req, res) => {
   Entry.find()
@@ -8,10 +9,10 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const username = req.body.username;
-  const title = req.body.title;
-  const text = req.body.text;
-  const date = Date.parse(req.body.date);
+  const username = sanitize(req.body.username);
+  const title = sanitize(req.body.title);
+  const text = sanitize(req.body.text);
+  const date = Date.parse(sanitize(req.body.date));
 
   const newEntry = new Entry({
     username,
@@ -40,10 +41,10 @@ router.route('/:id').delete((req, res) => {
 router.route('/update/:id').post((req, res) => {
   Entry.findById(req.params.id)
     .then(entry => {
-      entry.username = req.body.username;
-      entry.title = req.body.title;
-      entry.text = req.body.text;
-      entry.date = Date.parse(req.body.date);
+      entry.username = sanitize(req.body.username);
+      entry.title = sanitize(req.body.title);
+      entry.text = sanitize(req.body.text);
+      entry.date = Date.parse(sanitize(req.body.date));
 
       entry.save()
         .then(() => res.json('Entry updated!'))

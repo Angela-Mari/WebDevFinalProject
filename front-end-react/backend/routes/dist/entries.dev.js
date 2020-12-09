@@ -4,6 +4,8 @@ var router = require('express').Router();
 
 var Entry = require('../models/entry.model');
 
+var sanitize = require("mongo-sanitize");
+
 router.route('/').get(function (req, res) {
   Entry.find().then(function (entries) {
     return res.json(entries);
@@ -12,18 +14,16 @@ router.route('/').get(function (req, res) {
   });
 });
 router.route('/add').post(function (req, res) {
-  var username = req.body.username;
-  var title = req.body.title;
-  var text = req.body.text;
-  var date = Date.parse(req.body.date);
-  
+  var username = sanitize(req.body.username);
+  var title = sanitize(req.body.title);
+  var text = sanitize(req.body.text);
+  var date = Date.parse(sanitize(req.body.date));
   var newEntry = new Entry({
     username: username,
     title: title,
     text: text,
     date: date
   });
-  
   newEntry.save().then(function () {
     return res.json('Entry added!');
   })["catch"](function (err) {
@@ -46,10 +46,10 @@ router.route('/:id')["delete"](function (req, res) {
 });
 router.route('/update/:id').post(function (req, res) {
   Entry.findById(req.params.id).then(function (entry) {
-    entry.username = req.body.username;
-    entry.title = req.body.title;
-    entry.text = req.body.text;
-    entry.date = Date.parse(req.body.date);
+    entry.username = sanitize(req.body.username);
+    entry.title = sanitize(req.body.title);
+    entry.text = sanitize(req.body.text);
+    entry.date = Date.parse(sanitize(req.body.date));
     entry.save().then(function () {
       return res.json('Entry updated!');
     })["catch"](function (err) {

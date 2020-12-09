@@ -281,7 +281,7 @@ function Hub() {
                     <QuoteContainer id = {user.sub}/>
                     <div className = "navBttns">
                         <img src = {user.picture} alt = {user.name} className = "profilePic"/>
-                        <LogoutButton />
+                        <span><LogoutButton /></span>
                         <button style = {button} onClick = {cycleTheme}>
                             Change Theme
                         </button>

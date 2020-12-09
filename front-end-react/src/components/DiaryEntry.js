@@ -1,4 +1,5 @@
 import React from 'react'
+import SocialMedia from './SocialMedia'
 
 
 
@@ -62,11 +63,25 @@ class DiaryEntry extends React.Component {
         padding : 20
     }
 
-    const button = {
+    const buttonD = {
+        border: 2,
+        borderStyle: "solid",
+        borderLeftColor : "white",
+        borderTopColor : "white",
+        borderRightColor: "white",
+        borderBottomColor: "white",
+        backgroundColor : "transparent",
+        borderRadius : "0px 20px 20px 0px",
+        marginRight : 5,
+        paddingRight: 10,
+        paddingLeft: 10
+    }
+
+    const buttonE = {
         borderColor : "transparent",
         backgroundColor : "white",
-        borderRadius : 20,
-        margin : 5,
+        borderRadius : "20px 0px 0px 20px",
+        marginLeft : 5,
         paddingRight: 10,
         paddingLeft: 10
     }
@@ -89,8 +104,8 @@ class DiaryEntry extends React.Component {
             }
 
             <div>
-                <button style = {button} name = "edit" onClick = {this.buttonClicked}>edit</button>
-                <button style = {button} name = "delete" onClick = {this.buttonClicked}>delete</button>
+                <button style = {buttonE} name = "edit" onClick = {this.buttonClicked}>edit</button>
+                <button style = {buttonD} name = "delete" onClick = {this.buttonClicked}>delete</button>
             </div>
             
         </div>

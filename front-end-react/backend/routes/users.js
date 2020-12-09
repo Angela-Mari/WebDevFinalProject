@@ -1,5 +1,6 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
+const sanitize = require("mongo-sanitize")
 
 router.route('/').get((req, res) => {
   User.find()
@@ -8,8 +9,8 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const username = req.body.username;
-  const theme = Number(req.body.theme);
+  const username = sanitize(req.body.username);
+  const theme = Number(sanitize(req.body.theme));
 
   const newUser = new User({
     username,
@@ -22,7 +23,7 @@ router.route('/add').post((req, res) => {
 });
 
 router.route('/update/:id').post((req, res) => {
-  User.findById(req.params.id)
+  User.findById(sanitize(req.params.id))
     .then(user => {
       user.username = user.username;
       user.theme = Number(req.body.theme);

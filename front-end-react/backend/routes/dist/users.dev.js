@@ -4,6 +4,8 @@ var router = require('express').Router();
 
 var User = require('../models/user.model');
 
+var sanitize = require("mongo-sanitize");
+
 router.route('/').get(function (req, res) {
   User.find().then(function (users) {
     return res.json(users);
@@ -12,8 +14,8 @@ router.route('/').get(function (req, res) {
   });
 });
 router.route('/add').post(function (req, res) {
-  var username = req.body.username;
-  var theme = Number(req.body.theme);
+  var username = sanitize(req.body.username);
+  var theme = Number(sanitize(req.body.theme));
   var newUser = new User({
     username: username,
     theme: theme
@@ -25,7 +27,7 @@ router.route('/add').post(function (req, res) {
   });
 });
 router.route('/update/:id').post(function (req, res) {
-  User.findById(req.params.id).then(function (user) {
+  User.findById(sanitize(req.params.id)).then(function (user) {
     user.username = user.username;
     user.theme = Number(req.body.theme);
     user.save().then(function () {
