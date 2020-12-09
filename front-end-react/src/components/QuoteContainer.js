@@ -73,10 +73,14 @@ class QuoteContainer extends React.Component{
         this.addQuote = this.addQuote.bind(this)
         this.submitQuote = this.submitQuote.bind(this)
         this.minusQuote = this.minusQuote.bind(this)
+        this.loadQuotes = this.loadQuotes.bind(this)
     }
 
     componentDidMount() {
+        this.loadQuotes()
+    }
 
+    loadQuotes(){
         let id = this.props.id
         axios.get('http://localhost:5000/quotes')
             .then(response=> {
@@ -156,7 +160,7 @@ class QuoteContainer extends React.Component{
             .then(res => {
             console.log(res.data)
             this.setState({didMount: false})
-            this.componentDidMount()
+            this.loadQuotes()
         });
     }
 
@@ -178,7 +182,7 @@ class QuoteContainer extends React.Component{
                     } 
                 })
 
-                this.componentDidMount();  
+                this.loadQuotes();  
             })
             .catch(error => {
                 alert("you must type a valid quote and author")
