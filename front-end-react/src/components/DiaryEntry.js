@@ -9,11 +9,25 @@ class DiaryEntry extends React.Component {
         this.state = {
             edit : false,
             delete : false,
-            isShown : false
+            isShown : false,
+            date: ""
         }
         this.buttonClicked = this.buttonClicked.bind(this)
     }
     
+    componentDidMount(){
+        let myDate = this.props.entry.date.substring(0,10)
+        
+        let year = myDate.substring(0, 4);
+        let month = myDate.substring(5, 7);
+        let day = myDate.substring(8, 10);
+
+        myDate = month + '/' + day + '/' + year;
+
+        this.setState({
+            date: myDate
+        })
+    }
     buttonClicked(event){
         if (event.target.name === "edit"){
             console.log(this.props.entry)
@@ -67,7 +81,7 @@ class DiaryEntry extends React.Component {
             
             <div style = {titleContainer}>
                 <h2 >{this.props.entry.title}</h2>
-                <h3 style = {{fontSize : 20, padding : 10}}>{this.props.entry.date}</h3>
+                <h3 style = {{fontSize : 20, padding : 10}}>{this.state.date}</h3>
             </div>   
             <hr />
             { this.state.isShown &&
