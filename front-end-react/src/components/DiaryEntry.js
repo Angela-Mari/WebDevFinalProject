@@ -5,7 +5,6 @@ import SocialMedia from './SocialMedia'
 
 class DiaryEntry extends React.Component {
     constructor(props) {
-        //console.log(props)
         super()
         this.state = {
             edit : false,
@@ -14,9 +13,10 @@ class DiaryEntry extends React.Component {
             date: ""
         }
         this.buttonClicked = this.buttonClicked.bind(this)
+        this.displayDate = this.displayDate.bind(this)
     }
     
-    componentDidMount(){
+    displayDate(){
         let myDate = this.props.entry.date.substring(0,10)
         
         let year = myDate.substring(0, 4);
@@ -25,13 +25,10 @@ class DiaryEntry extends React.Component {
 
         myDate = month + '/' + day + '/' + year;
 
-        this.setState({
-            date: myDate
-        })
+        return(myDate)
     }
     buttonClicked(event){
         if (event.target.name === "edit"){
-            console.log(this.props.entry)
             this.props.changeHandler(
                 {entry: this.props.entry,
                     id: this.props.id,
@@ -96,7 +93,7 @@ class DiaryEntry extends React.Component {
             
             <div style = {titleContainer}>
                 <h2 >{this.props.entry.title}</h2>
-                <h3 style = {{fontSize : 20, padding : 10}}>{this.state.date}</h3>
+                <h3 style = {{fontSize : 20, padding : 10}}>{this.displayDate()}</h3>
             </div>   
             <hr />
             { this.state.isShown &&

@@ -44,13 +44,8 @@ function Hub() {
     const [newDate, setDate] = React.useState("");
     const [newText, setText] = React.useState("");
     const [newId, setId] = React.useState("");
-    //const [edit, setEdit] = React.useState(false);
 
-    function submitHandler(myNewEntry) {   
-        console.log("submit new entry or update old entry")
-        console.log(myNewEntry)
-        
-
+    function submitHandler(myNewEntry) { 
         const dbEntry = {
             username: user.sub, //pass down username from auth0
             title: myNewEntry.title,
@@ -58,15 +53,9 @@ function Hub() {
             date:  myNewEntry.date
         }
 
-        
-       console.log("new entry: ")
-       console.log(dbEntry)
         if (newId !== "")
         {
-            console.log("this should be an edit/update!")
-            console.log(newId)
             let id = newId;
-            console.log("edit")
             axios.post('http://localhost:5000/entries/update/' + id, dbEntry)
             .then((response) => {
                 console.log(response.data)
@@ -76,8 +65,7 @@ function Hub() {
                 setText("")
                 loadProfile()
             })
-            .catch((error) => {console.log("bad update")})
-            
+            .catch((error) => {console.log("could not update")})
             return
         }
 
@@ -97,23 +85,16 @@ function Hub() {
     }
 
     function changeHandler(editObject){
-         console.log("change handler")
-         console.log(editObject)
         if (editObject.change === "delete"){
             deleteEntry(editObject)
         }
         else {
             editEntry(editObject)
-        }
-        
+        } 
     }
 
     function deleteEntry(editObject) {
-        console.log("deleting...")
-        console.log(editObject)
-        console.log(editObject.entry)
         let id = editObject.id;
-        console.log(id)
         axios.delete('http://localhost:5000/entries/' + id)
             .then(res => {
                 console.log(res.data)
@@ -121,18 +102,14 @@ function Hub() {
             });
     }   
 
-    function editEntry(editObject) {    
-        console.log(editObject)
-        
+    function editEntry(editObject) {            
         setId(editObject.entry._id)
         setTitle(editObject.entry.title)
         setDate(editObject.entry.date.substring(0,10))
         setText(editObject.entry.text)
-        //deleteEntry(editObject)
     }
 
     function updateValue(newValue){
-        console.log("update values of newEntry")
         if ("title" in newValue){
             setTitle(newValue.title)
         }
@@ -166,21 +143,17 @@ function Hub() {
     const [accent, setSidebar] = React.useState()
     const [profile, setProfile] = React.useState([])
     const [isLoaded, loaded] = React.useState(false)
+    const [toggle, toggleThis] = React.useState(false)
 
     let headerColors = ["pink", "CornflowerBlue", "DarkSeaGreen"]
     let sideColors = ["palevioletred", "aliceBlue", "SeaGreen"]
 
     function loadProfile() {
-       console.log("load profile...")
-        //set theme from db
         axios.get('http://localhost:5000/users')
             .then(response=> {
+                console.log(response.data)
                 if (response.data.length > 0){
-                    // console.log("looking for user")
-                    // console.log(response.data)
                     let curUser = response.data.filter(function (obj){
-                        //console.log(obj.username)
-                        //console.log(user.sub)
                         return obj.username === user.sub;
                     });
 
@@ -188,11 +161,8 @@ function Hub() {
                     setHeader({backgroundColor : headerColors[profile.theme]})
                     setSidebar({backgroundColor : sideColors[profile.theme]})
                     loaded(true)
-                    //return
                 }
                 else {
-                    console.log("no user found, adding a new one")
-                
                     const dbUser = {
                         username: user.sub,
                         theme: 1
@@ -204,6 +174,7 @@ function Hub() {
         // get entires from db
         axios.get('http://localhost:5000/entries')
             .then(response=> {
+                console.log(response.data)
                 if (response.data.length > 0){
                         let entries = response.data.filter( function(obj) {
                             if (obj.username === user.sub){
@@ -218,16 +189,16 @@ function Hub() {
                             }
                             else return
                     })
-                    setArray(entries)    
+                    setArray([...entries])    
                 }
-                else setArray([])
+                else {
+                    setArray([...[]])
+                }
             })
 
     }  
     
     function addUser(dbUser) {
-            
-        console.log("adding user...")
         axios.post('http://localhost:5000/users/add', dbUser)
         .then((response) => {
             console.log(response.data)
@@ -238,7 +209,6 @@ function Hub() {
     } 
 
     function cycleTheme(){
-        console.log(profile.theme)
         var newIndex = profile.theme+1;
         if (newIndex > 2){
             newIndex = 0
@@ -249,13 +219,9 @@ function Hub() {
             username: profile.username,
             theme: newIndex
           });
-
-        console.log(profile.theme)
         setHeader({backgroundColor : headerColors[newIndex]})
         setSidebar({backgroundColor : sideColors[newIndex]})
         
-
-        console.log(profile)
         let updateDB = {
             username: profile.username,
             theme: newIndex
@@ -266,7 +232,6 @@ function Hub() {
     }
 
     useEffect(()=>{
-        console.log("use effect")
         if (isAuthenticated){
         loadProfile()
         }
@@ -281,7 +246,7 @@ function Hub() {
                     <QuoteContainer id = {user.sub}/>
                     <div className = "navBttns">
                         <img src = {user.picture} alt = {user.name} className = "profilePic"/>
-                        <span><LogoutButton /></span>
+                        <LogoutButton />
                         <button style = {button} onClick = {cycleTheme}>
                             Change Theme
                         </button>

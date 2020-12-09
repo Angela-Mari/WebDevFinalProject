@@ -78,7 +78,6 @@ class QuoteContainer extends React.Component{
     componentDidMount() {
 
         let id = this.props.id
-        console.log(id)
         axios.get('http://localhost:5000/quotes')
             .then(response=> {
                 if (response.data.length > 0){
@@ -152,30 +151,16 @@ class QuoteContainer extends React.Component{
         if (this.state.length === 0){
             return
         }
-        console.log(this.state.quotes)
-        console.log(this.state.index)
         let id = this.state.quotes[this.state.index]._id;
-        console.log(id)
         axios.delete('http://localhost:5000/quotes/' + id)
             .then(res => {
             console.log(res.data)
             this.setState({didMount: false})
-            // this.setState(prevState => {
-            //     return{
-            //         quotes: prevState.quotes.filter(quote => quote.id !== id),
-            //         length: prevState.length -1,
-            //         index: 0
-            //     }
-            // })
             this.componentDidMount()
         });
-        
-        
     }
 
     submitQuote(newQuote){
-        console.log(newQuote)
-        
         const dbQuote = {
             username: this.props.id, //pass down username from auth0
             text: newQuote.quote,

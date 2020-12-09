@@ -38,14 +38,12 @@ class QuoteForm extends React.Component{
     }
 
     changeHandler(event){
-        //console.log("isChanging")
         const {name, value} = event.target 
         this.setState({[name] : value}    
         )
     }
 
     submitHandler(){
-        //console.log("done")
         this.props.submitQuote(this.state)
     }
 
