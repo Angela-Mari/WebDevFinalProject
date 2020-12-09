@@ -19,6 +19,7 @@ class DiaryEntry extends React.Component {
             console.log(this.props.entry)
             this.props.changeHandler(
                 {entry: this.props.entry,
+                    id: this.props.id,
                     change: "edit"
             })
 

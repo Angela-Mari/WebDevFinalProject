@@ -16,12 +16,14 @@ router.route('/add').post(function (req, res) {
   var title = req.body.title;
   var text = req.body.text;
   var date = Date.parse(req.body.date);
+  
   var newEntry = new Entry({
     username: username,
     title: title,
     text: text,
     date: date
   });
+  
   newEntry.save().then(function () {
     return res.json('Entry added!');
   })["catch"](function (err) {

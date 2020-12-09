@@ -1,6 +1,5 @@
 import React from 'react';
 import DiaryEntry from './DiaryEntry'
-import axios from 'axios';
 
 class DiaryCards extends React.Component {
 
@@ -19,7 +18,7 @@ class DiaryCards extends React.Component {
         
 
         const entriesArray = this.props.entries.map((item, curIndex = 0) => {
-        
+            
         ++curIndex
         return (<DiaryEntry edit = {false} delete = {false} entry = {item} id = {item._id} key = {item._id} changeHandler = {this.props.changeHandler}/>)
         });

@@ -43,17 +43,44 @@ function Hub() {
     const [newTitle, setTitle] = React.useState("");
     const [newDate, setDate] = React.useState("");
     const [newText, setText] = React.useState("");
+    const [newId, setId] = React.useState("");
     //const [edit, setEdit] = React.useState(false);
 
     function submitHandler(myNewEntry) {   
+        console.log("submit new entry or update old entry")
+        console.log(myNewEntry)
+        
+
         const dbEntry = {
             username: user.sub, //pass down username from auth0
             title: myNewEntry.title,
             text: myNewEntry.text,
-            date: myNewEntry.date
+            date:  myNewEntry.date
         }
 
-        console.log(myNewEntry)
+        
+       console.log("new entry: ")
+       console.log(dbEntry)
+        if (newId !== "")
+        {
+            console.log("this should be an edit/update!")
+            console.log(newId)
+            let id = newId;
+            console.log("edit")
+            axios.post('http://localhost:5000/entries/update/' + id, dbEntry)
+            .then((response) => {
+                console.log(response.data)
+                setId("")
+                setTitle("")
+                setDate("")
+                setText("")
+                loadProfile()
+            })
+            .catch((error) => {console.log("bad update")})
+            
+            return
+        }
+
         //temp url!
         axios.post('http://localhost:5000/entries/add', dbEntry)
             .then((response) => {
@@ -62,15 +89,16 @@ function Hub() {
                 setTitle("")
                 setDate("")
                 setText("")
+                loadProfile()
             })
             .catch((error) => {
-                alert("You must enter a title, data, and text before you can submit a new entry.")
+                alert("You must enter a title, date, and text before you can submit a new entry.")
             })
     }
 
     function changeHandler(editObject){
-        // console.log("change handler")
-        // console.log(editObject)
+         console.log("change handler")
+         console.log(editObject)
         if (editObject.change === "delete"){
             deleteEntry(editObject)
         }
@@ -84,36 +112,39 @@ function Hub() {
         console.log("deleting...")
         console.log(editObject)
         console.log(editObject.entry)
-        let id = editObject.entry._id;
+        let id = editObject.id;
         console.log(id)
         axios.delete('http://localhost:5000/entries/' + id)
-            .then(res => console.log(res.data));
-        
-            setArray(displayArray => displayArray.filter((item , i) => { 
-                       if (item._id !== editObject.entry._id)
-                        return item 
-                    }))
-
+            .then(res => {
+                console.log(res.data)
+                loadProfile()    
+            });
     }   
 
-    function editEntry(editObject) {
-        let editThisEntry = displayArray[editObject.entryIndex-1];
-        setTitle(editThisEntry.title)
-        setDate(editThisEntry.date)
-        setText(editThisEntry.text)
-        deleteEntry(editObject)
+    function editEntry(editObject) {    
+        console.log(editObject)
+        
+        setId(editObject.entry._id)
+        setTitle(editObject.entry.title)
+        setDate(editObject.entry.date.substring(0,10))
+        setText(editObject.entry.text)
+        //deleteEntry(editObject)
     }
 
-    function updateValue(newValues){
-        if (newValues.title){
-            setTitle(newValues.title)
+    function updateValue(newValue){
+        console.log("update values of newEntry")
+        if ("title" in newValue){
+            setTitle(newValue.title)
         }
-        if (newValues.date){
-            setDate(newValues.date)
+        
+        if ("date" in newValue){
+            setDate(newValue.date)
         }
-        if (newValues.text){
-            setText(newValues.text)
+
+        if ("text" in newValue){
+            setText(newValue.text)
         }
+        
     }
     
     function searchHandler(keyword) {
@@ -140,13 +171,13 @@ function Hub() {
     let sideColors = ["palevioletred", "aliceBlue", "SeaGreen"]
 
     function loadProfile() {
-       
+       console.log("load profile...")
         //set theme from db
         axios.get('http://localhost:5000/users')
             .then(response=> {
                 if (response.data.length > 0){
-                    console.log("looking for user")
-                    console.log(response.data)
+                    // console.log("looking for user")
+                    // console.log(response.data)
                     let curUser = response.data.filter(function (obj){
                         //console.log(obj.username)
                         //console.log(user.sub)
@@ -189,6 +220,7 @@ function Hub() {
                     })
                     setArray(entries)    
                 }
+                else setArray([])
             })
 
     }  
@@ -258,7 +290,7 @@ function Hub() {
                 <div style = {mainContent}>
                     
                     <div style = {sidebar, accent} className = "side-bar">  
-                        <NewEntry title = {newTitle} date = {newDate} text = {newText} submitHandler = {submitHandler} updateValue = {updateValue}/>
+                        <NewEntry title = {newTitle} date = {newDate} text = {newText} id = {newId} submitHandler = {submitHandler} updateValue = {updateValue}/>
                         <SocialMedia />
                     </div >
                     <div style = {displayEntries}>

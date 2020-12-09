@@ -16,7 +16,6 @@ class NewEntry extends React.Component {
             title : props.title,
             date : props.date,
             text : props.text
-
         }
         this.handelChange = this.handelChange.bind(this)
         this.submiter = this.submiter.bind(this)
@@ -30,7 +29,8 @@ class NewEntry extends React.Component {
     
     submiter(event){
         event.preventDefault()
-        var myObject = {title: "", date: "", text: ""}
+        var myObject = {_id: "", title: "", date: "", text: ""}
+            myObject._id = this.props.id
             myObject.title = this.props.title
             myObject.date = this.props.date
             myObject.text = this.props.text
